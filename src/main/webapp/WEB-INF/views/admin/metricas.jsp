@@ -1,0 +1,122 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow - Métricas</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/metricasStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>GymFlow</h1>
+            <p>Panel Administrativo</p>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="${pageContext.request.contextPath}/productos" class="nav-item">
+                <i class="fas fa-box"></i> CRUD Productos de GymFlow
+            </a>
+            <a href="${pageContext.request.contextPath}/membresias" class="nav-item">
+                <i class="fas fa-tags"></i> CRUD Membresías de GymFlow
+            </a>
+            <a href="${pageContext.request.contextPath}/tipos-productos" class="nav-item">
+                <i class="fas fa-box"></i> CRUD Tipos de productos de GymFlow
+            </a>
+            <a href="${pageContext.request.contextPath}/usuarios" class="nav-item">
+                <i class="fas fa-users"></i> CRUD Usuarios de GymFlow
+            </a>
+            <a href="${pageContext.request.contextPath}/metricas" class="nav-item active">
+                <i class="fas fa-chart-line"></i> Métricas
+            </a>
+            <a href="${pageContext.request.contextPath}/gestion" class="nav-item">
+                <i class="fa-solid fa-bars-progress"></i> Gestión
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h2>Centro de Métricas</h2>
+            <p>Análisis y comparativas para toma de decisiones</p>
+        </header>
+
+        <div class="metrics-container">
+            <!-- Métrica 1: Evolución de Suscripciones -->
+            <a href="${pageContext.request.contextPath}/metricas/evolucion-suscripciones" class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="metric-content">
+                    <h3>Evolución de Suscripciones</h3>
+                    <p>Análisis comparativo de altas y bajas por periodo</p>
+                    <div class="metric-preview">
+                        <span class="preview-stat">
+                            <i class="fas fa-arrow-up"></i> +15% este mes
+                        </span>
+                    </div>
+                </div>
+                <div class="metric-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <!-- Métrica 2: Métodos de Pago -->
+            <a href="${pageContext.request.contextPath}/metricas/metodos-pago" class="metric-card">
+                <div class="metric-icon payment">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="metric-content">
+                    <h3>Análisis de Métodos de Pago</h3>
+                    <p>Distribución y tendencias de transacciones</p>
+                    <div class="metric-preview">
+                        <span class="preview-stat">
+                            <i class="fas fa-percent"></i> 68% digital
+                        </span>
+                    </div>
+                </div>
+                <div class="metric-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <!-- Métrica 3: Tasa de Renovación -->
+            <a href="${pageContext.request.contextPath}/metricas/tasa-renovacion" class="metric-card">
+                <div class="metric-icon renewal">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="metric-content">
+                    <h3>Tasa de Renovación</h3>
+                    <p>Comparativa de retención de membresías</p>
+                    <div class="metric-preview">
+                        <span class="preview-stat positive">
+                            <i class="fas fa-check-circle"></i> 82% renovado
+                        </span>
+                    </div>
+                </div>
+                <div class="metric-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- Información adicional -->
+        <section class="info-section">
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <h4>¿Qué son las métricas?</h4>
+                    <p>Las métricas permiten comparar datos en el tiempo para tomar decisiones estratégicas basadas en tendencias reales del negocio.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
