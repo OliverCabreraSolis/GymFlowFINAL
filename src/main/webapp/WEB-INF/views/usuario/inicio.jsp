@@ -1,7 +1,6 @@
 
 <link rel="stylesheet" href="/css/UsuarioStyles.css" />
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -64,7 +63,6 @@
                     </div>
                     <h3>Entrenamiento Personal</h3>
                     <p>Sesiones individualizadas con entrenadores certificados</p>
-                    <button class="service-btn">Reservar</button>
                 </div>
 
                 <div class="service-card">
@@ -73,7 +71,6 @@
                     </div>
                     <h3>Clases Grupales</h3>
                     <p>Yoga, Pilates, Crossfit, Zumba y más</p>
-                    <button class="service-btn">Ver Horarios</button>
                 </div>
 
                 <div class="service-card">
@@ -82,7 +79,6 @@
                     </div>
                     <h3>Evaluación Física</h3>
                     <p>Análisis completo de tu condición física</p>
-                    <button class="service-btn">Agendar</button>
                 </div>
             </div>
         </section>
@@ -105,7 +101,6 @@
                         <li>Vestuarios y duchas</li>
                         <li>Wi-Fi gratuito</li>
                     </ul>
-                    <button class="membership-btn">Elegir Plan</button>
                 </div>
 
                 <div class="membership-card featured">
@@ -118,7 +113,6 @@
                         <li>2 sesiones de entrenamiento personal</li>
                         <li>Acceso a zona VIP</li>
                     </ul>
-                    <button class="membership-btn">Elegir Plan</button>
                 </div>
 
                 <div class="membership-card">
@@ -131,7 +125,6 @@
                         <li>Plan nutricional personalizado</li>
                         <li>Acceso a todos los servicios</li>
                     </ul>
-                    <button class="membership-btn">Elegir Plan</button>
                 </div>
             </div>
         </section>

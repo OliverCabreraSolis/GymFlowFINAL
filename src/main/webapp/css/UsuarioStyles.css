@@ -246,7 +246,7 @@ body {
 
 .membership-card.featured {
     border-left-color: #fbbf24;
-    background: linear-gradient(135deg, #05166b 0%, #a62729 100%);
+    background: linear-gradient(135deg, #354aaf 0%, #a62729 100%);
     color: white;
     transform: scale(1.05);
 }
@@ -277,7 +277,7 @@ body {
 }
 
 .membership-period {
-    color: #64748b;
+    color: #ccdce8;
     margin-bottom: 25px;
 }
 
@@ -291,12 +291,12 @@ body {
     margin: 10px 0;
     display: flex;
     align-items: center;
-    color: #334155;
+    color: #dfe9ed;
 }
 
 .membership-features li::before {
     content: "✓";
-    color: #10b981;
+    color: #eaefed;
     font-weight: bold;
     margin-right: 10px;
 }
