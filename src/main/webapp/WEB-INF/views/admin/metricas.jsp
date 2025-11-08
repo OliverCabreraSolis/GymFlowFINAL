@@ -49,7 +49,7 @@
 
         <div class="metrics-container">
             <!-- Métrica 1: Evolución de Suscripciones -->
-            <a href="${pageContext.request.contextPath}/metricas/evolucion-suscripciones" class="metric-card">
+            <a href="${pageContext.request.contextPath}/metricaEvolucionSuscripciones" class="metric-card">
                 <div class="metric-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
@@ -68,7 +68,7 @@
             </a>
 
             <!-- Métrica 2: Métodos de Pago -->
-            <a href="${pageContext.request.contextPath}/metricas/metodos-pago" class="metric-card">
+            <a href="${pageContext.request.contextPath}/metricaMetodoPago" class="metric-card">
                 <div class="metric-icon payment">
                     <i class="fas fa-credit-card"></i>
                 </div>
@@ -87,7 +87,7 @@
             </a>
 
             <!-- Métrica 3: Tasa de Renovación -->
-            <a href="${pageContext.request.contextPath}/metricas/tasa-renovacion" class="metric-card">
+            <a href="${pageContext.request.contextPath}/metricaTasaRenovacion" class="metric-card">
                 <div class="metric-icon renewal">
                     <i class="fas fa-sync-alt"></i>
                 </div>
