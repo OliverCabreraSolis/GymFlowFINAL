@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/tipoproducto")
 public class TipoProductoController {
     private final TipoProductoService tipoProductoService;
 
@@ -16,7 +17,7 @@ public class TipoProductoController {
    public String listarTipoProducto(Model model){
         List<TipoProducto> lista =  tipoProductoService.listarTipoProducto();
         model.addAttribute("tipoproductos",lista);
-        return "tipoproducto/lista";
+        return "admin/tipoproductoCRUD";
    }
     @GetMapping("/crear")
     public String mostrarFormularioCrear(Model model) {

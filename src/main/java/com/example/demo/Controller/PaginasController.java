@@ -40,4 +40,9 @@ public class PaginasController {
     public String mostrarPagos() {
         return "usuario/pagos";
     }
+
+    @GetMapping("/tipoproductoCRUD")
+    public String mostrarTipoproductoCRUD() {
+        return "admin/tipoproductoCRUD";
+    }
 }
