@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS usuario (
     );
 
 CREATE TABLE IF NOT EXISTS tipo_producto (
-                                             id_tipo INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                                             nombre_tipo VARCHAR(200) NOT NULL,
+    id_tipo INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre_tipo VARCHAR(200) NOT NULL,
     descripcion_producto TEXT
     );
 

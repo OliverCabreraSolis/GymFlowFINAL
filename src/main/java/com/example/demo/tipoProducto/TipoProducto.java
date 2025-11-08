@@ -1,25 +1,25 @@
-package com.example.demo.TipoProducto;
+package com.example.demo.tipoProducto;
 
 public class TipoProducto {
 
-    private int idTipo;
+    private Integer idTipo;
     private String nombreTipo;
     private String descripcionProducto;
 
     public TipoProducto() {
     }
 
-    public TipoProducto(int idTipo, String nombreTipo, String descripcionProducto) {
+    public TipoProducto(Integer idTipo, String nombreTipo, String descripcionProducto) {
         this.idTipo = idTipo;
         this.nombreTipo = nombreTipo;
         this.descripcionProducto = descripcionProducto;
     }
 
-    public int getIdTipo() {
+    public Integer getIdTipo() {
         return idTipo;
     }
 
-    public void setIdTipo(int idTipo) {
+    public void setIdTipo(Integer idTipo) {
         this.idTipo = idTipo;
     }
 
