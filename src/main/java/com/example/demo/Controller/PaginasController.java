@@ -40,6 +40,4 @@ public class PaginasController {
     public String mostrarPagos() {
         return "usuario/pagos";
     }
-
-
 }
