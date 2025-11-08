@@ -1370,3 +1370,194 @@ body {
     .membership-card h2 { font-size: 1.3rem; }
     .membership-card .precio { font-size: 1.1rem; }
 }
+
+/* ====== PAGOSsssss =========
+==================== */
+
+.pagos-page * {
+    box-sizing: border-box;
+}
+
+.pagos-page body {
+    font-family: 'Arial', sans-serif;
+    background: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.pagos-page .dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.pagos-page .sidebar {
+    width: 250px;
+    background: #1e293b;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.pagos-page .logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #38bdf8;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pagos-page .nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagos-page .nav-item {
+    margin: 1rem 0;
+}
+
+.pagos-page .nav-item a {
+    color: #cbd5e1;
+    text-decoration: none;
+    display: block;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.pagos-page .nav-item a:hover,
+.pagos-page .nav-item a.active {
+    background: #334155;
+    color: #38bdf8;
+}
+
+/* ===== Main Content ===== */
+.pagos-page .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.pagos-page .header {
+    background: #e2e8f0;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagos-page .header h1 {
+    font-size: 1.8rem;
+    color: #0f172a;
+}
+
+/* ===== Pagos ===== */
+.pagos-page .pagos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.pagos-page .pago-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.pagos-page .pago-card:hover {
+    transform: translateY(-5px);
+}
+
+.pagos-page .pago-card h3 {
+    margin-top: 0;
+    color: #0f172a;
+}
+
+.pagos-page .pago-card .status {
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+}
+
+.pagos-page .status.pagado {
+    color: #16a34a;
+    background: #dcfce7;
+}
+
+.pagos-page .status.pendiente {
+    color: #eab308;
+    background: #fef9c3;
+}
+
+.pagos-page .status.vencido {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+/* ===== Formulario de Pago ===== */
+.pagos-page .pago-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pagos-page .pago-form h2 {
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.pagos-page .pago-form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+}
+
+.pagos-page .pago-form input,
+.pagos-page .pago-form select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.pagos-page .pago-form button {
+    background: #38bdf8;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pagos-page .pago-form button:hover {
+    background: #0ea5e9;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+    .pagos-page .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .pagos-page .main-content {
+        padding: 1rem;
+    }
+
+    .pagos-page .pagos-container {
+        grid-template-columns: 1fr;
+    }
+}

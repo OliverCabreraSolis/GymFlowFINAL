@@ -36,4 +36,10 @@ public class PaginasController {
         return "usuario/membresias";
     }
 
+    @GetMapping("/pagos")
+    public String mostrarPagos() {
+        return "usuario/pagos";
+    }
+
+
 }
