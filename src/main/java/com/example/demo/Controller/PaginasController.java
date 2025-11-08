@@ -31,4 +31,9 @@ public class PaginasController {
         return "admin/CRUDproductos";
     }
 
+    @GetMapping("/membresias")
+    public String mostrarMembresias() {
+        return "usuario/membresias";
+    }
+
 }
