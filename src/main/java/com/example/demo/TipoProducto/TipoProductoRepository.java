@@ -1,4 +1,4 @@
-package com.example.demo.tipoProducto;
+package com.example.demo.TipoProducto;
 
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
