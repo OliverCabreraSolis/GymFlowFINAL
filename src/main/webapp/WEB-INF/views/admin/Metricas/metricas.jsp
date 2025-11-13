@@ -19,22 +19,15 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="${pageContext.request.contextPath}/productos" class="nav-item">
-                <i class="fas fa-box"></i> CRUD Productos de GymFlow
+            <a href="${pageContext.request.contextPath}/ver-CRUDsInicio" class="nav-item active">
+                <i class="fas fa-database"></i> CRUDs
             </a>
-            <a href="${pageContext.request.contextPath}/membresias" class="nav-item">
-                <i class="fas fa-tags"></i> CRUD Membresías de GymFlow
-            </a>
-            <a href="${pageContext.request.contextPath}/tipos-productos" class="nav-item">
-                <i class="fas fa-box"></i> CRUD Tipos de productos de GymFlow
-            </a>
-            <a href="${pageContext.request.contextPath}/usuarios" class="nav-item">
-                <i class="fas fa-users"></i> CRUD Usuarios de GymFlow
-            </a>
-            <a href="${pageContext.request.contextPath}/metricas" class="nav-item active">
+
+            <a href="${pageContext.request.contextPath}/ver-metricasInicio" class="nav-item">
                 <i class="fas fa-chart-line"></i> Métricas
             </a>
-            <a href="${pageContext.request.contextPath}/gestion" class="nav-item">
+
+            <a href="${pageContext.request.contextPath}/ver-gestionInicio" class="nav-item">
                 <i class="fa-solid fa-bars-progress"></i> Gestión
             </a>
         </nav>
