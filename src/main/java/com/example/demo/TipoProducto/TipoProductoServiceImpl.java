@@ -1,6 +1,6 @@
 package com.example.demo.TipoProducto;
 
-import  java.util.List;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
