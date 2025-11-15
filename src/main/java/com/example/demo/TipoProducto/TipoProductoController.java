@@ -28,11 +28,6 @@ public class TipoProductoController {
         return "tipoproducto/lista";
     }
 
-    // ENDPOINT API
-    @GetMapping("/api/list")
-    public List<TipoProducto> obtenerProductos() {
-        return tipoProductoService.listarTipoProducto();
-    }
 
     // OBTENER UNO POR ID
     @PostMapping("/get")
@@ -64,9 +59,9 @@ public class TipoProductoController {
     }
 
     // REGISTRAR DESDE OTRO FORMULARIO
-    @PostMapping("/registrar")
+    @PostMapping("/tipoProducto/registrar")
     public String registrarTipoProducto(@ModelAttribute("tipoProducto") TipoProducto tipoProducto) {
         tipoProductoService.crearTipoProducto(tipoProducto);
-        return "redirect:/tipoproducto/list";
+        return "redirect:tipoproducto/list";
     }
 }

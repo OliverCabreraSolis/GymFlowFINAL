@@ -1,65 +1,94 @@
--- ================================================
--- USUARIO
--- ================================================
+-- ============================
+-- INSERCIONES COMPLETAS
+-- ============================
+
+-- USUARIOS
 INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
-('Carlos Pérez', 'carlos.perez@gmail.com', '12345', 'CLIENTE'),
-('María Gómez', 'maria.gomez@gmail.com', 'abcde', 'CLIENTE'),
-('Admin Flow', 'admin@gymflow.com', 'admin123', 'ADMIN');
+    ('Juan Perez', 'juan.perez@email.com', '1234', 'CLIENTE'),
+    ('Maria Gomez', 'maria.gomez@email.com', '1234', 'CLIENTE'),
+    ('Carlos Ruiz', 'carlos.ruiz@email.com', '1234', 'CLIENTE'),
+    ('Ana Torres', 'ana.torres@email.com', '1234', 'CLIENTE'),
+    ('Luis Castillo', 'luis.castillo@email.com', '1234', 'CLIENTE'),
+    ('Sofia Rojas', 'sofia.rojas@email.com', '1234', 'CLIENTE'),
+    ('Pedro Sanchez', 'pedro.sanchez@email.com', '1234', 'CLIENTE'),
+    ('Lucia Medina', 'lucia.medina@email.com', '1234', 'CLIENTE'),
+    ('Admin 1', 'admin1@email.com', 'admin123', 'ADMIN'),
+    ('Admin 2', 'admin2@email.com', 'admin123', 'ADMIN');
 
--- ================================================
 -- TIPO PRODUCTO
--- ================================================
 INSERT INTO tipo_producto (nombre_tipo, descripcion_producto) VALUES
-('Suplemento', 'Productos nutricionales que ayudan al rendimiento.'),
-('Accesorio', 'Elementos de apoyo para el entrenamiento.'),
-('Ropa deportiva', 'Prendas diseñadas para comodidad y transpiración.');
+    ('Suplemento', 'Vitaminas y suplementos nutricionales'),
+    ('Proteina', 'Polvos de proteína y batidos'),
+    ('Snack', 'Snacks saludables'),
+    ('Bebida', 'Bebidas energéticas y jugos'),
+    ('Ropa Deportiva', 'Camisetas y shorts'),
+    ('Equipo', 'Pesas y mancuernas'),
+    ('Accesorios', 'Bandas elásticas y guantes'),
+    ('Calzado', 'Zapatillas deportivas'),
+    ('Masaje', 'Rodillos y bolas de masaje'),
+    ('Suplemento Vegano', 'Proteínas y vitaminas veganas');
 
--- ================================================
--- PRODUCTO
--- ================================================
+-- PRODUCTOS
 INSERT INTO producto (id_tipo, nombre, descripcion, precio) VALUES
-(1, 'Proteína Whey', 'Suplemento de proteína de suero de leche (1kg).', 120.50),
-(2, 'Cinturón de levantamiento', 'Soporte lumbar para ejercicios de peso.', 80.00),
-(3, 'Polo DryFit', 'Polo transpirable con logo de Gym Flow.', 55.00);
+    (1, 'Vitaminas C', 'Vitaminas C 500mg', 25.00),
+    (2, 'Proteina Whey', 'Proteina whey 1kg', 120.00),
+    (3, 'Barra de Almendra', 'Barra energética', 15.00),
+    (4, 'Jugo Natural', 'Jugo de frutas 500ml', 10.00),
+    (5, 'Camiseta Deportiva', 'Camiseta para entrenamiento', 40.00),
+    (6, 'Mancuernas 5kg', 'Set de mancuernas', 80.00),
+    (7, 'Banda Elastica', 'Banda de resistencia', 20.00),
+    (8, 'Zapatillas Run', 'Zapatillas para correr', 150.00),
+    (9, 'Rodillo Masaje', 'Rodillo para recuperación', 35.00),
+    (10, 'Proteina Vegana', 'Proteina vegetal 1kg', 130.00);
 
--- ================================================
--- PLAN
--- ================================================
+-- PLANES
 INSERT INTO plan (nombre, duracion, precio, descripcion) VALUES
-('Plan Mensual', '30 días', 100.00, 'Acceso libre al gimnasio por 1 mes.'),
-('Plan Trimestral', '90 días', 270.00, 'Acceso libre por 3 meses con descuento.'),
-('Plan Anual', '365 días', 900.00, 'Acceso ilimitado durante todo el año.');
+    ('Plan Básico', '1 Mes', 50.00, 'Acceso al gimnasio 1 mes'),
+    ('Plan Premium', '3 Meses', 140.00, 'Acceso al gimnasio 3 meses + clases'),
+    ('Plan Anual', '12 Meses', 500.00, 'Acceso completo anual'),
+    ('Plan Intensivo', '1 Mes', 70.00, 'Entrenamiento intensivo'),
+    ('Plan Yoga', '1 Mes', 60.00, 'Clases de yoga'),
+    ('Plan Crossfit', '3 Meses', 200.00, 'Entrenamiento Crossfit'),
+    ('Plan Nutrición', '1 Mes', 40.00, 'Asesoría nutricional'),
+    ('Plan Online', '6 Meses', 180.00, 'Entrenamiento online'),
+    ('Plan Familiar', '12 Meses', 900.00, 'Gimnasio para 4 miembros'),
+    ('Plan Estudiantil', '1 Mes', 30.00, 'Plan económico para estudiantes');
 
--- ================================================
--- MEMBRESÍA
--- (Cada membresía se asocia a un usuario y a un plan)
--- ================================================
+-- MEMBRESIAS
 INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, descripcion, precio) VALUES
-(1, 1, 'Membresía Mensual de Carlos', '2025-11-01', '2025-11-30', 'Acceso total al gimnasio por un mes.', 100.00),
-(2, 2, 'Membresía Trimestral de María', '2025-10-15', '2026-01-15', 'Incluye asesoramiento personalizado.', 270.00),
-(1, 3, 'Membresía Anual de Carlos', '2025-01-01', '2026-01-01', 'Acceso premium con beneficios anuales.', 900.00);
+      (1, 1, 'Membresia Juan', '2025-11-01', '2025-12-01', 'Plan Básico', 50.00),
+      (2, 2, 'Membresia Maria', '2025-11-01', '2026-02-01', 'Plan Premium', 140.00),
+      (3, 3, 'Membresia Carlos', '2025-11-01', '2026-11-01', 'Plan Anual', 500.00),
+      (4, 4, 'Membresia Ana', '2025-11-01', '2025-12-01', 'Plan Intensivo', 70.00),
+      (5, 5, 'Membresia Luis', '2025-11-01', '2025-12-01', 'Plan Yoga', 60.00),
+      (6, 6, 'Membresia Sofia', '2025-11-01', '2026-02-01', 'Plan Crossfit', 200.00),
+      (7, 7, 'Membresia Pedro', '2025-11-01', '2025-12-01', 'Plan Nutrición', 40.00),
+      (8, 8, 'Membresia Lucia', '2025-11-01', '2026-05-01', 'Plan Online', 180.00),
+      (9, 9, 'Membresia David', '2025-11-01', '2026-11-01', 'Plan Familiar', 900.00),
+      (10, 10, 'Membresia Camila', '2025-11-01', '2025-12-01', 'Plan Estudiantil', 30.00);
 
--- ================================================
--- PAGO
--- (Cada pago pertenece a un usuario)
--- ================================================
-INSERT INTO pago (fecha, total, metodo_pago, id_usuario) VALUES
-('2025-11-01', 100.00, 'Tarjeta', 1),
-('2025-10-15', 350.00, 'Efectivo', 2),
-('2025-01-01', 975.00, 'Transferencia', 1);
+-- PAGOS
+INSERT INTO pago (total, metodo_pago, id_usuario) VALUES
+    (50.00, 'TARJETA', 1),
+    (140.00, 'PAYPAL', 2),
+    (500.00, 'TARJETA', 3),
+    (70.00, 'EFECTIVO', 4),
+    (60.00, 'TARJETA', 5),
+    (200.00, 'PAYPAL', 6),
+    (40.00, 'EFECTIVO', 7),
+    (180.00, 'TARJETA', 8),
+    (900.00, 'PAYPAL', 9),
+    (30.00, 'EFECTIVO', 10);
 
--- ================================================
 -- DETALLE PAGO
--- (Cada detalle puede referirse a un PLAN o un PRODUCTO)
--- ================================================
 INSERT INTO detalle_pago (id_pago, tipo_item, id_producto, id_plan, cantidad, precio_unitario, subtotal) VALUES
--- Pago 1: Carlos compra un plan mensual
-(1, 'PLAN', NULL, 1, 1, 100.00, 100.00),
-
--- Pago 2: María compra un plan trimestral + un producto
-(2, 'PLAN', NULL, 2, 1, 270.00, 270.00),
-(2, 'PRODUCTO', 2, NULL, 1, 80.00, 80.00),
-
--- Pago 3: Carlos compra un plan anual + una proteína
-(3, 'PLAN', NULL, 3, 1, 900.00, 900.00),
-(3, 'PRODUCTO', 1, NULL, 1, 75.00, 75.00);
+    (1, 'PLAN', NULL, 1, 1, 50.00, 50.00),
+    (2, 'PLAN', NULL, 2, 1, 140.00, 140.00),
+    (3, 'PLAN', NULL, 3, 1, 500.00, 500.00),
+    (4, 'PLAN', NULL, 4, 1, 70.00, 70.00),
+    (5, 'PLAN', NULL, 5, 1, 60.00, 60.00),
+    (6, 'PLAN', NULL, 6, 1, 200.00, 200.00),
+    (7, 'PLAN', NULL, 7, 1, 40.00, 40.00),
+    (8, 'PLAN', NULL, 8, 1, 180.00, 180.00),
+    (9, 'PLAN', NULL, 9, 1, 900.00, 900.00),
+    (10, 'PLAN', NULL, 10, 1, 30.00, 30.00);
