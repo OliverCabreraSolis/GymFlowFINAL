@@ -45,7 +45,7 @@ public class PaginasControllerAdmin {
 
     @GetMapping("/ver-CRUDTipoProducto")
     public String mostrarCRUDTipoProducto() {
-        return "admin/CRUDs/TipoProductoCRUD";
+        return "admin/CRUDs/tipoProductoCRUD";
     }
 
     @GetMapping("/ver-CRUDProductos")
