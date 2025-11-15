@@ -109,7 +109,7 @@
             <p><strong>Fuente de datos:</strong></p>
             <ul>
                 <li><strong>Tabla principal:</strong> <code>pagos</code> que registra cada transacción con su <code>metodo_pago</code> (EFECTIVO, TARJETA, TRANSFERENCIA, YAPE, PLIN).</li>
-                <li><strong>Campos utilizados:</strong> <code>metodo_pago</code>, <code>monto</code>, <code>fecha_pago</code>, <code>estado</code> (solo se cuentan pagos con estado = 'COMPLETADO').</li>
+                <li><strong>Campos utilizados:</strong> <code>metodo_pago</code>, <code>monto</code> y <code>fecha_pago</code>.</li>
                 <li><strong>Cálculo de porcentajes:</strong> Se divide el total de transacciones por método entre el total general de pagos del periodo.</li>
                 <li><strong>Métodos digitales:</strong> Suma de TARJETA + TRANSFERENCIA + YAPE + PLIN.</li>
             </ul>
