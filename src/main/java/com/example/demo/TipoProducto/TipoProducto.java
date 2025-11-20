@@ -8,7 +8,7 @@ public class TipoProducto {
     private Boolean disponible;
 
     public TipoProducto() {
-        // Constructor vacío
+        // Constructor vacio
     }
 
     public TipoProducto(Integer idTipo, String nombreTipo, String descripcionProducto, Boolean disponible) {

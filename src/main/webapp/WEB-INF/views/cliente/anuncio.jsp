@@ -1,6 +1,8 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <link rel="stylesheet" href="/css/UsuarioStyles.css" />
 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -58,10 +60,10 @@
             <!-- MEJORADO: Botones CTA -->
             <div class="seccion-cta">
                 <div class="cta-buttons">
-                    <a href="Membresias.html" class="boton-principal">
+                    <a href="/ver-membresias" class="boton-principal">
                         ÚNETE AHORA
                     </a>
-                    <a href="Contacto.html" class="boton-secundario">
+                    <a href="/ver-contacto" class="boton-secundario">
                         CONTACTANOS
                     </a>
                 </div>

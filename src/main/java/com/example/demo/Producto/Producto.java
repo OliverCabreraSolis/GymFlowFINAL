@@ -9,7 +9,7 @@ public class Producto {
     private Boolean disponible;
 
     public Producto() {
-    // Constructor vacío
+    // Constructor vacio
     }
     public Producto(Integer idProducto, Integer idTipo, String nombre, String descripcion, Double precio, Boolean disponible) {
         this.idProducto = idProducto;

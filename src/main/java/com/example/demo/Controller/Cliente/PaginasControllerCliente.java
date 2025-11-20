@@ -8,17 +8,17 @@ public class PaginasControllerCliente {
 
     @GetMapping("/ver-inicio")
     public String mostrarInicio() {
-        return "usuario/inicio";
+        return "cliente/inicio";
     }
 
     @GetMapping("/ver-anuncio")
     public String mostrarAnuncio() {
-        return "usuario/anuncio";
+        return "cliente/anuncio";
     }
 
     @GetMapping("/ver-contacto")
     public String mostrarContacto() {
-        return "usuario/contacto";
+        return "cliente/contacto";
     }
 
     @GetMapping("/ver-login")
@@ -28,16 +28,16 @@ public class PaginasControllerCliente {
 
     @GetMapping("/ver-membresias")
     public String mostrarMembresias() {
-        return "usuario/membresias";
+        return "cliente/membresias";
     }
 
     @GetMapping("/ver-pagos")
     public String mostrarPagos() {
-        return "usuario/pagos";
+        return "cliente/pagos";
     }
 
     @GetMapping("/ver-productos")
     public String mostrarProductos() {
-        return "usuario/productos";
+        return "cliente/productos";
     }
 }

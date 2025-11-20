@@ -8,7 +8,7 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 
     private final TipoProductoDAO tipoProductoDAO;
 
-    // Inyección por constructor
+    // Inyeccion por constructor
     public TipoProductoServiceImpl(TipoProductoDAO tipoProductoDAO) {
         this.tipoProductoDAO = tipoProductoDAO;
     }

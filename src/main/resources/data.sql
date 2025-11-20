@@ -5,7 +5,7 @@
 -- USUARIOS
 INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
     ('Juan Perez', 'juan.perez@email.com', '1234', 'CLIENTE'),
-    ('Maria Gomez', 'maria.gomez@email.com', '1234', 'CLIENTE'),
+    ('María Gomez', 'maria.gomez@email.com', '1234', 'CLIENTE'),
     ('Carlos Ruiz', 'carlos.ruiz@email.com', '1234', 'CLIENTE'),
     ('Ana Torres', 'ana.torres@email.com', '1234', 'CLIENTE'),
     ('Luis Castillo', 'luis.castillo@email.com', '1234', 'CLIENTE'),
@@ -70,14 +70,14 @@ INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, des
 -- PAGOS
 INSERT INTO pago (total, metodo_pago, id_usuario) VALUES
     (50.00, 'TARJETA', 1),
-    (140.00, 'PAYPAL', 2),
+    (140.00, 'YAPE', 2),
     (500.00, 'TARJETA', 3),
     (70.00, 'EFECTIVO', 4),
     (60.00, 'TARJETA', 5),
-    (200.00, 'PAYPAL', 6),
+    (200.00, 'YAPE', 6),
     (40.00, 'EFECTIVO', 7),
     (180.00, 'TARJETA', 8),
-    (900.00, 'PAYPAL', 9),
+    (900.00, 'PLIN', 9),
     (30.00, 'EFECTIVO', 10);
 
 -- DETALLE PAGO

@@ -15,7 +15,7 @@ public class TipoProductoController {
 
     private final TipoProductoService tipoProductoService;
 
-    // Inyección por constructor
+    // Inyeccion por constructor
     public TipoProductoController(TipoProductoService tipoProductoService) {
         this.tipoProductoService = tipoProductoService;
     }

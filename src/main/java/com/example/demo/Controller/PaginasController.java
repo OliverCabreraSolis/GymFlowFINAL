@@ -6,43 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PaginasController {
 
-    @GetMapping("/inicio")
-    public String mostrarInicio() {
-        return "usuario/inicio";
-    }
-
-    @GetMapping("/anuncio")
-    public String mostrarAnuncio() {
-        return "usuario/anuncio";
-    }
-
-    @GetMapping("/contacto")
-    public String mostrarContacto() {
-        return "usuario/contacto";
-    }
-
-    @GetMapping("/login")
+    @GetMapping("")
     public String mostrarLogin() {
         return "login/login";
     }
 
-    @GetMapping("/CRUDproductos")
-    public String mostrarCRUDproductos() {
-        return "admin/CRUDproductos";
-    }
-
-    @GetMapping("/membresias")
-    public String mostrarMembresias() {
-        return "usuario/membresias";
-    }
-
-    @GetMapping("/pagos")
-    public String mostrarPagos() {
-        return "usuario/pagos";
-    }
-
-    @GetMapping("/tipoproductoCRUD")
-    public String mostrarTipoproductoCRUD() {
-        return "admin/tipoproductoCRUD";
-    }
 }

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,31 +22,8 @@
 </button>
 
 <div class="dashboard">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="logo">
-            <h1>GymFlow</h1>
-            <p>Tu Gimnasio Digital</p>
-        </div>
 
-        <nav class="nav-menu">
-            <a href="${pageContext.request.contextPath}/inicio" class="nav-item">
-                <i class="fas fa-home"></i> Principal
-            </a>
-            <a href="${pageContext.request.contextPath}/anuncio" class="nav-item">
-                <i class="fas fa-users"></i> Publicidad
-            </a>
-            <a href="${pageContext.request.contextPath}/membresias" class="nav-item active">
-                <i class="fas fa-id-card"></i> Catálogo de membresías
-            </a>
-            <a href="${pageContext.request.contextPath}/contacto" class="nav-item">
-                <i class="fas fa-credit-card"></i> Contacto
-            </a>
-            <a href="${pageContext.request.contextPath}/CRUDproductos" class="nav-item">
-                <i class="fas fa-headset"></i> Productos de GymFlow
-            </a>
-        </nav>
-    </aside>
+    <%@ include file='barra_tareas.jsp' %>
 
     <!-- Contenido principal -->
     <main class="main-content">
