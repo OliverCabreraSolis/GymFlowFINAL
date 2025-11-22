@@ -8,7 +8,6 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 
     private final TipoProductoDAO tipoProductoDAO;
 
-    // Inyeccion por constructor
     public TipoProductoServiceImpl(TipoProductoDAO tipoProductoDAO) {
         this.tipoProductoDAO = tipoProductoDAO;
     }
@@ -16,6 +15,16 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     @Override
     public List<TipoProducto> listarTipoProducto() {
         return tipoProductoDAO.listarTipoProducto();
+    }
+
+    @Override
+    public List<TipoProducto> listarTipoProductoInactivos() {
+        return tipoProductoDAO.listarTipoProductoInactivos();
+    }
+
+    @Override
+    public List<TipoProducto> listarTodosTipoProducto() {
+        return tipoProductoDAO.listarTodosTipoProducto();
     }
 
     @Override
@@ -36,5 +45,10 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     @Override
     public void desactivarTipoProducto(Integer id) {
         tipoProductoDAO.desactivarTipoProducto(id);
+    }
+
+    @Override
+    public void reactivarTipoProducto(Integer id) {
+        tipoProductoDAO.reactivarTipoProducto(id);
     }
 }

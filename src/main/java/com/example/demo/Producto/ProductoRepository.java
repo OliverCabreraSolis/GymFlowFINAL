@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Repository
 public class ProductoRepository implements ProductoDAO {
@@ -14,45 +15,92 @@ public class ProductoRepository implements ProductoDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final RowMapper<Producto> productoRowMapper = (rs, rowNum) ->
-            new Producto(
-                    rs.getInt("id_producto"),
-                    rs.getInt("id_tipo"),
-                    rs.getString("nombre"),
-                    rs.getString("descripcion"),
-                    rs.getDouble("precio"),
-                    rs.getBoolean("disponible")
-            );
+    private final RowMapper<Producto> productoRowMapper = (rs, rowNum) -> {
+        Producto producto = new Producto();
+        producto.setIdProducto(rs.getInt("ID_PRODUCTO"));
+        producto.setIdTipo(rs.getInt("ID_TIPO"));
+        producto.setNombre(rs.getString("NOMBRE"));
+        producto.setDescripcion(rs.getString("DESCRIPCION"));
+        producto.setPrecio(rs.getDouble("PRECIO"));
+        producto.setDisponible(rs.getBoolean("DISPONIBLE"));
+        try {
+            producto.setNombreTipo(rs.getString("NOMBRE_TIPO"));
+        } catch (Exception e) {
+            // Si no existe la columna, se ignora
+        }
+        return producto;
+    };
+
+    // 🆕 MÉTODO NUEVO - Filtro por tipo
+    @Override
+    public List<Producto> listarProductosPorTipo(Integer idTipo) {
+        String query = "SELECT p.ID_PRODUCTO, p.ID_TIPO, p.NOMBRE, p.DESCRIPCION, p.PRECIO, p.DISPONIBLE, " +
+                "tp.NOMBRE_TIPO FROM PRODUCTO p " +
+                "INNER JOIN TIPO_PRODUCTO tp ON p.ID_TIPO = tp.ID_TIPO " +
+                "WHERE p.ID_TIPO = ?";
+        return jdbcTemplate.query(query, productoRowMapper, idTipo);
+    }
 
     @Override
-    public List<Producto> listarProducto() {
-        String sql = "SELECT id_producto, id_tipo, nombre, descripcion, precio, disponible FROM producto WHERE disponible = TRUE";
-        return jdbcTemplate.query(sql, productoRowMapper);
+    public List<Producto> listarProductos() {
+        String query = "SELECT p.ID_PRODUCTO, p.ID_TIPO, p.NOMBRE, p.DESCRIPCION, p.PRECIO, p.DISPONIBLE, " +
+                "tp.NOMBRE_TIPO FROM PRODUCTO p " +
+                "INNER JOIN TIPO_PRODUCTO tp ON p.ID_TIPO = tp.ID_TIPO " +
+                "WHERE p.DISPONIBLE = TRUE";
+        return jdbcTemplate.query(query, productoRowMapper);
+    }
+
+    @Override
+    public List<Producto> listarProductosInactivos() {
+        String query = "SELECT p.ID_PRODUCTO, p.ID_TIPO, p.NOMBRE, p.DESCRIPCION, p.PRECIO, p.DISPONIBLE, " +
+                "tp.NOMBRE_TIPO FROM PRODUCTO p " +
+                "INNER JOIN TIPO_PRODUCTO tp ON p.ID_TIPO = tp.ID_TIPO " +
+                "WHERE p.DISPONIBLE = FALSE";
+        return jdbcTemplate.query(query, productoRowMapper);
+    }
+
+    @Override
+    public List<Producto> listarTodosProductos() {
+        String query = "SELECT p.ID_PRODUCTO, p.ID_TIPO, p.NOMBRE, p.DESCRIPCION, p.PRECIO, p.DISPONIBLE, " +
+                "tp.NOMBRE_TIPO FROM PRODUCTO p " +
+                "INNER JOIN TIPO_PRODUCTO tp ON p.ID_TIPO = tp.ID_TIPO";
+        return jdbcTemplate.query(query, productoRowMapper);
     }
 
     @Override
     public Producto obtenerProductoPorId(Integer id) {
-        String sql = "SELECT id_producto, id_tipo, nombre, descripcion, precio, disponible FROM producto WHERE id_producto = ?";
-        List<Producto> result = jdbcTemplate.query(sql, productoRowMapper, id);
-        if (result.isEmpty()) return null;
-        else return result.get(0);
+        String query = "SELECT p.ID_PRODUCTO, p.ID_TIPO, p.NOMBRE, p.DESCRIPCION, p.PRECIO, p.DISPONIBLE, " +
+                "tp.NOMBRE_TIPO FROM PRODUCTO p " +
+                "INNER JOIN TIPO_PRODUCTO tp ON p.ID_TIPO = tp.ID_TIPO " +
+                "WHERE p.ID_PRODUCTO = ?";
+        try {
+            return jdbcTemplate.queryForObject(query, productoRowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public void crearProducto(Producto producto) {
-        String sql = "INSERT INTO producto (id_tipo, nombre, descripcion, precio, disponible) VALUES (?, ?, ?, ?, TRUE)";
-        jdbcTemplate.update(sql, producto.getIdTipo(), producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
+        String query = "INSERT INTO PRODUCTO (ID_TIPO, NOMBRE, DESCRIPCION, PRECIO, DISPONIBLE) VALUES (?, ?, ?, ?, TRUE)";
+        jdbcTemplate.update(query, producto.getIdTipo(), producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
     }
 
     @Override
     public void actualizarProducto(Producto producto) {
-        String sql = "UPDATE producto SET id_tipo = ?, nombre = ?, descripcion = ?, precio = ? WHERE id_producto = ?";
-        jdbcTemplate.update(sql, producto.getIdTipo(), producto.getNombre(), producto.getDescripcion(), producto.getPrecio(), producto.getIdProducto());
+        String query = "UPDATE PRODUCTO SET ID_TIPO = ?, NOMBRE = ?, DESCRIPCION = ?, PRECIO = ?, DISPONIBLE = ? WHERE ID_PRODUCTO = ?";
+        jdbcTemplate.update(query, producto.getIdTipo(), producto.getNombre(), producto.getDescripcion(), producto.getPrecio(), producto.getDisponible(), producto.getIdProducto());
     }
 
     @Override
     public void desactivarProducto(Integer id) {
-        String sql = "UPDATE producto SET disponible = FALSE WHERE id_producto = ?";
-        jdbcTemplate.update(sql, id);
+        String query = "UPDATE PRODUCTO SET DISPONIBLE = FALSE WHERE ID_PRODUCTO = ?";
+        jdbcTemplate.update(query, id);
+    }
+
+    @Override
+    public void reactivarProducto(Integer id) {
+        String query = "UPDATE PRODUCTO SET DISPONIBLE = TRUE WHERE ID_PRODUCTO = ?";
+        jdbcTemplate.update(query, id);
     }
 }

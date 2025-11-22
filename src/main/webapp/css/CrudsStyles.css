@@ -1,0 +1,489 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2b293c;
+    margin-bottom: 20px;
+}
+
+.btn-volver {
+    display: inline-block;
+    background: #ad79a9;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.btn-volver:hover {
+    background: #f6a9de;
+    color: #2b293c;
+    transform: scale(1.05);
+}
+
+/* FILTROS */
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filtro-btn {
+    padding: 8px 16px;
+    background: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.filtro-btn.activo,
+.filtro-btn:hover {
+    background: #ad79a9;
+    color: white;
+    border-color: #74577a;
+}
+
+/* FORMULARIO CREAR */
+.form-tipo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #74577a;
+    box-shadow: 0 2px 8px rgba(116, 87, 122, 0.1);
+}
+
+.form-tipo input,
+.form-tipo textarea {
+    padding: 12px;
+    border: 2px solid #74577a;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-tipo input:focus,
+.form-tipo textarea:focus {
+    outline: none;
+    border-color: #ad79a9;
+}
+
+.form-tipo textarea {
+    height: 100px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+.agregar-btn {
+    background: #ad79a9;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.agregar-btn:hover {
+    background: #f6a9de;
+    color: #2b293c;
+    transform: translateY(-2px);
+}
+
+/* GRID DE TARJETAS */
+.tipos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* TARJETAS BASE */
+.tipo-card {
+    background: white;
+    border: 2px solid #74577a;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.tipo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* TARJETA EN EDICIÓN */
+.tipo-card.edicion {
+    border-color: #ad79a9;
+    background: #faf0fa;
+    box-shadow: 0 4px 12px rgba(173, 121, 169, 0.2);
+}
+
+/* TARJETA INACTIVA */
+.tipo-card.inactivo {
+    opacity: 0.8;
+    border-color: #dc3545;
+    background: #fff5f5;
+}
+
+.badge-inactivo {
+    background: #dc3545;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* CONTENIDO DE TARJETAS */
+.tipo-card h3 {
+    margin-top: 0;
+    color: #463a57;
+    border-bottom: 2px solid #ad79a9;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.tipo-card p {
+    margin: 8px 0;
+    color: #666;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.estado-info {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 12px;
+    border-left: 4px solid #ad79a9;
+    color: #463a57;
+}
+
+/* FORMULARIO DENTRO DE TARJETAS (EDICIÓN) */
+.tipo-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tipo-card.edicion label {
+    font-weight: bold;
+    color: #463a57;
+    margin-top: 5px;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.tipo-card input,
+.tipo-card textarea,
+.tipo-card select {
+    width: 100%;
+    padding: 10px;
+    margin: 4px 0;
+    border: 2px solid #ad79a9;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.tipo-card input:focus,
+.tipo-card textarea:focus,
+.tipo-card select:focus {
+    outline: none;
+    border-color: #74577a;
+}
+
+.tipo-card textarea {
+    height: 80px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+.tipo-card select {
+    background: white;
+    cursor: pointer;
+}
+
+/* BOTONES */
+.botones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.editar-btn,
+.guardar-btn,
+.eliminar-btn,
+.cancelar-btn,
+.reactivar-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    min-width: 70px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.editar-btn {
+    background: #ad79a9;
+    color: white;
+    border: 2px solid #ad79a9;
+}
+
+.guardar-btn {
+    background: #28a745;
+    color: white;
+    border: 2px solid #28a745;
+}
+
+.eliminar-btn {
+    background: #dc3545;
+    color: white;
+    border: 2px solid #dc3545;
+}
+
+.cancelar-btn {
+    background: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+}
+
+.reactivar-btn {
+    background: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+}
+
+/* HOVER EFFECTS */
+.editar-btn:hover {
+    background: #f6a9de;
+    color: #2b293c;
+    border-color: #f6a9de;
+    transform: translateY(-1px);
+}
+
+.guardar-btn:hover {
+    background: #218838;
+    border-color: #218838;
+    transform: translateY(-1px);
+}
+
+.eliminar-btn:hover {
+    background: #c82333;
+    border-color: #c82333;
+    transform: translateY(-1px);
+}
+
+.cancelar-btn:hover {
+    background: #5a6268;
+    border-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.reactivar-btn:hover {
+    background: #138496;
+    border-color: #138496;
+    transform: translateY(-1px);
+}
+
+/* FORMULARIOS DENTRO DE BOTONES */
+.botones form {
+    display: inline;
+    flex: 1;
+}
+
+.botones form button {
+    width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px;
+    }
+
+    .tipos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .botones {
+        flex-direction: column;
+    }
+
+    .editar-btn,
+    .guardar-btn,
+    .eliminar-btn,
+    .cancelar-btn,
+    .reactivar-btn {
+        min-width: 100%;
+    }
+}
+
+/* Para crud de productos */
+
+/* 🆕 FILTROS POR TIPO */
+.filtros-tipo {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+}
+
+.filtros-tipo strong {
+    color: #463a57;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+/* 🆕 Estilos específicos para los botones de tipo */
+.filtros-tipo .filtro-btn {
+    padding: 6px 12px;
+    background: white;
+    color: #74577a;
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all 0.3s;
+    border: 2px solid #ad79a9;
+    white-space: nowrap;
+}
+
+.filtros-tipo .filtro-btn:hover {
+    background: #f6a9de;
+    color: #2b293c;
+    transform: translateY(-1px);
+}
+
+.filtros-tipo .filtro-btn.activo {
+    background: #ad79a9;
+    color: white;
+    border-color: #74577a;
+}
+
+/* 🆕 Mejora los filtros principales */
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #74577a;
+}
+
+.filtro-btn {
+    padding: 8px 16px;
+    background: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.filtro-btn.activo,
+.filtro-btn:hover {
+    background: #ad79a9;
+    color: white;
+    border-color: #74577a;
+}
+
+/* 🆕 Responsive para los filtros */
+@media (max-width: 768px) {
+    .filtros-tipo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros-tipo strong {
+        margin-bottom: 8px;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filtro-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 🆕 Mejora las cards de productos */
+.tipo-card .estado-info {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 13px;
+    border-left: 4px solid #ad79a9;
+}
+
+.tipo-card .estado-info strong {
+    color: #463a57;
+}
+
+/* 🆕 Estilo para el precio */
+.precio-destacado {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1em;
+}

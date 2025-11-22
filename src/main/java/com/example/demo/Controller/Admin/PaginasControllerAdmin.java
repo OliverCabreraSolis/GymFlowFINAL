@@ -45,12 +45,12 @@ public class PaginasControllerAdmin {
 
     @GetMapping("/ver-CRUDTipoProducto")
     public String mostrarCRUDTipoProducto() {
-        return "admin/CRUDs/tipoProductoCRUD";
+        return "redirect:/tipoproducto/list";
     }
 
     @GetMapping("/ver-CRUDProductos")
     public String mostrarCRUDProductos() {
-        return "admin/CRUDs/productosCRUD";
+        return "redirect:/producto/list";
     }
 
     @GetMapping("/ver-CRUDUsuarios")

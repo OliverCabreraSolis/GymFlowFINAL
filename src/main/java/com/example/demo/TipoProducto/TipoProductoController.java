@@ -15,53 +15,65 @@ public class TipoProductoController {
 
     private final TipoProductoService tipoProductoService;
 
-    // Inyeccion por constructor
     public TipoProductoController(TipoProductoService tipoProductoService) {
         this.tipoProductoService = tipoProductoService;
     }
 
-    // LISTA TODOS LOS TIPOS DE PRODUCTO
     @GetMapping("/list")
-    public String listarTipoProducto(Model model) {
-        List<TipoProducto> lista = tipoProductoService.listarTipoProducto();
+    public String listarTipoProducto(
+            @RequestParam(required = false) Integer editarId,
+            @RequestParam(required = false, defaultValue = "activos") String filtro,
+            Model model) {
+
+        System.out.println("🎯 TIPOPRODUCTO CONTROLLER - Cargando datos: " + filtro);
+
+        List<TipoProducto> lista;
+
+        switch (filtro) {
+            case "inactivos":
+                lista = tipoProductoService.listarTipoProductoInactivos();
+                break;
+            case "todos":
+                lista = tipoProductoService.listarTodosTipoProducto();
+                break;
+            default: // activos
+                lista = tipoProductoService.listarTipoProducto();
+        }
+
+        System.out.println("📦 Datos cargados: " + lista.size() + " elementos");
+
         model.addAttribute("tipoproductos", lista);
-        return "tipoproducto/lista";
+        model.addAttribute("editarId", editarId);
+        model.addAttribute("filtroActual", filtro);
+
+        // 🚨 ESTA ES LA LÍNEA IMPORTANTE - usa la vista de admin
+        return "admin/CRUDs/tipoProductoCRUD";
     }
 
-
-    // OBTENER UNO POR ID
-    @PostMapping("/get")
-    public String obtenerTipoProducto(@RequestParam("id") Integer id, Model model) {
-        TipoProducto tipo = tipoProductoService.obtenerTipoProductoPorId(id);
-        model.addAttribute("tipoProducto", tipo);
-        return "tipoproducto/obtener";
-    }
-
-    // FORMULARIO CREAR
-    @GetMapping("/crear")
-    public String mostrarFormularioCrear(Model model) {
-        model.addAttribute("tipoProducto", new TipoProducto());
-        return "tipoproducto/crear";
-    }
-
-    // GUARDAR NUEVO
+    // LISTA CON FILTROS
+    // EN TipoProductoController - CAMBIA todos los return:
+    // CAMBIA los redirects para que vayan al Controller con datos:
     @PostMapping("/crear")
     public String crearTipoProducto(@ModelAttribute("tipoProducto") TipoProducto tipoProducto) {
         tipoProductoService.crearTipoProducto(tipoProducto);
-        return "redirect:/tipoproducto/list";
+        return "redirect:/tipoproducto/list"; // ← Al Controller con datos
     }
 
-    // FORMULARIO DE REGISTRO
-    @GetMapping("/registro")
-    public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("tipoProducto", new TipoProducto());
-        return "tipoproducto/registro";
+    @PostMapping("/actualizar")
+    public String actualizarTipoProducto(@ModelAttribute TipoProducto tipoProducto) {
+        tipoProductoService.actualizarTipoProducto(tipoProducto);
+        return "redirect:/tipoproducto/list"; // ← Al Controller con datos
     }
 
-    // REGISTRAR DESDE OTRO FORMULARIO
-    @PostMapping("/tipoProducto/registrar")
-    public String registrarTipoProducto(@ModelAttribute("tipoProducto") TipoProducto tipoProducto) {
-        tipoProductoService.crearTipoProducto(tipoProducto);
-        return "redirect:tipoproducto/list";
+    @PostMapping("/desactivar")
+    public String desactivarTipoProducto(@RequestParam Integer id) {
+        tipoProductoService.desactivarTipoProducto(id);
+        return "redirect:/tipoproducto/list"; // ← Al Controller con datos
+    }
+
+    @PostMapping("/reactivar")
+    public String reactivarTipoProducto(@RequestParam Integer id) {
+        tipoProductoService.reactivarTipoProducto(id);
+        return "redirect:/tipoproducto/list?filtro=inactivos"; // ← Al Controller con datos
     }
 }

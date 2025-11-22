@@ -8,9 +8,13 @@ public class Producto {
     private Double precio;
     private Boolean disponible;
 
+    // 🆕 AGREGA este campo
+    private String nombreTipo;
+
     public Producto() {
-    // Constructor vacio
+        // Constructor vacio
     }
+
     public Producto(Integer idProducto, Integer idTipo, String nombre, String descripcion, Double precio, Boolean disponible) {
         this.idProducto = idProducto;
         this.idTipo = idTipo;
@@ -18,8 +22,9 @@ public class Producto {
         this.descripcion = descripcion;
         this.precio = precio;
         this.disponible = disponible;
-}
+    }
 
+    // Getters y Setters existentes
     public Integer getIdProducto() { return idProducto; }
     public void setIdProducto(Integer idProducto) { this.idProducto = idProducto; }
 
@@ -37,4 +42,8 @@ public class Producto {
 
     public Boolean getDisponible() { return disponible; }
     public void setDisponible(Boolean disponible) { this.disponible = disponible; }
+
+    // 🆕 AGREGA estos getter y setter
+    public String getNombreTipo() { return nombreTipo; }
+    public void setNombreTipo(String nombreTipo) { this.nombreTipo = nombreTipo; }
 }

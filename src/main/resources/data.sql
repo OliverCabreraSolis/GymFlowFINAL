@@ -16,17 +16,17 @@ INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
     ('Admin 2', 'admin2@email.com', 'admin123', 'ADMIN');
 
 -- TIPO PRODUCTO
-INSERT INTO tipo_producto (nombre_tipo, descripcion_producto) VALUES
-    ('Suplemento', 'Vitaminas y suplementos nutricionales'),
-    ('Proteina', 'Polvos de proteína y batidos'),
-    ('Snack', 'Snacks saludables'),
-    ('Bebida', 'Bebidas energéticas y jugos'),
-    ('Ropa Deportiva', 'Camisetas y shorts'),
-    ('Equipo', 'Pesas y mancuernas'),
-    ('Accesorios', 'Bandas elásticas y guantes'),
-    ('Calzado', 'Zapatillas deportivas'),
-    ('Masaje', 'Rodillos y bolas de masaje'),
-    ('Suplemento Vegano', 'Proteínas y vitaminas veganas');
+ INSERT INTO tipo_producto (nombre_tipo, descripcion_producto, disponible) VALUES
+    ('Suplemento', 'Vitaminas y suplementos nutricionales', TRUE),
+    ('Proteina', 'Polvos de proteína y batidos', TRUE),
+    ('Snack', 'Snacks saludables', TRUE),
+    ('Bebida', 'Bebidas energéticas y jugos', TRUE),
+    ('Ropa Deportiva', 'Camisetas y shorts', TRUE),
+    ('Equipo', 'Pesas y mancuernas', TRUE),
+    ('Accesorios', 'Bandas elásticas y guantes', TRUE),
+    ('Calzado', 'Zapatillas deportivas', TRUE),
+    ('Masaje', 'Rodillos y bolas de masaje', FALSE),
+    ('Suplemento Vegano', 'Proteínas y vitaminas veganas', TRUE);
 
 -- PRODUCTOS
 INSERT INTO producto (id_tipo, nombre, descripcion, precio) VALUES

@@ -1,7 +1,6 @@
 package com.example.demo.Producto;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,18 +8,33 @@ public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoDAO productoDAO;
 
-    // Inyeccion por constructor
     public ProductoServiceImpl(ProductoDAO productoDAO) {
         this.productoDAO = productoDAO;
     }
 
     @Override
-    public List<Producto> listarProducto() {
-        return productoDAO.listarProducto();
+    public List<Producto> listarProductos() {
+        return productoDAO.listarProductos();
     }
 
     @Override
-    public Producto obtenerProductoPorId(Integer id) {
+    public List<Producto> listarProductosInactivos() {
+        return productoDAO.listarProductosInactivos();
+    }
+
+    @Override
+    public List<Producto> listarTodosProductos() {
+        return productoDAO.listarTodosProductos();
+    }
+
+    // 🆕 AGREGA esta implementación del nuevo método
+    @Override
+    public List<Producto> listarProductosPorTipo(Integer idTipo) {
+        return productoDAO.listarProductosPorTipo(idTipo);
+    }
+
+    @Override
+    public Producto obtenerProductoPorId(int id) {
         return productoDAO.obtenerProductoPorId(id);
     }
 
@@ -36,6 +50,11 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void desactivarProducto(Integer id) {
-        productoDAO.desactivarProducto(id); // Soft delete: pone disponible = FALSE
+        productoDAO.desactivarProducto(id);
+    }
+
+    @Override
+    public void reactivarProducto(Integer id) {
+        productoDAO.reactivarProducto(id);
     }
 }
