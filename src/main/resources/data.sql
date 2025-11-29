@@ -12,8 +12,8 @@ INSERT INTO usuario (nombre, correo, contrasena, rol, disponible) VALUES
     ('Sofia Rojas', 'sofia.rojas@email.com', '1234', 'CLIENTE', true),
     ('Pedro Sanchez', 'pedro.sanchez@email.com', '1234', 'CLIENTE', true),
     ('Lucia Medina', 'lucia.medina@email.com', '1234', 'CLIENTE', true),
-    ('Admin 1', 'admin1@email.com', 'admin123', 'ADMIN', true ),
-    ('Admin 2', 'admin2@email.com', 'admin200758', 'ADMIN',true);
+    ('Admin 1', 'admin1@email.com', 'admin123', 'ADMINISTRADOR', true ),
+    ('Admin 2', 'admin2@email.com', 'admin200758', 'ADMINISTRADOR',true);
 
 -- TIPO PRODUCTO
  INSERT INTO tipo_producto (nombre_tipo, descripcion_producto, disponible) VALUES
