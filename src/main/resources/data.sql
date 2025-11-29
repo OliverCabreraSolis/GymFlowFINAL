@@ -3,17 +3,17 @@
 -- ============================
 
 -- USUARIOS
-INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
-    ('Juan Perez', 'juan.perez@email.com', '1234', 'CLIENTE'),
-    ('María Gomez', 'maria.gomez@email.com', '1234', 'CLIENTE'),
-    ('Carlos Ruiz', 'carlos.ruiz@email.com', '1234', 'CLIENTE'),
-    ('Ana Torres', 'ana.torres@email.com', '1234', 'CLIENTE'),
-    ('Luis Castillo', 'luis.castillo@email.com', '1234', 'CLIENTE'),
-    ('Sofia Rojas', 'sofia.rojas@email.com', '1234', 'CLIENTE'),
-    ('Pedro Sanchez', 'pedro.sanchez@email.com', '1234', 'CLIENTE'),
-    ('Lucia Medina', 'lucia.medina@email.com', '1234', 'CLIENTE'),
-    ('Admin 1', 'admin1@email.com', 'admin123', 'ADMIN'),
-    ('Admin 2', 'admin2@email.com', 'admin123', 'ADMIN');
+INSERT INTO usuario (nombre, correo, contrasena, rol, disponible) VALUES
+    ('Juan Perez', 'juan.perez@email.com', '1234', 'CLIENTE',true),
+    ('María Gomez', 'maria.gomez@email.com', '1234', 'CLIENTE',false),
+    ('Carlos Ruiz', 'carlos.ruiz@email.com', '1234', 'CLIENTE', true),
+    ('Ana Torres', 'ana.torres@email.com', '1234', 'CLIENTE',true),
+    ('Luis Castillo', 'luis.castillo@email.com', '1234', 'CLIENTE',true),
+    ('Sofia Rojas', 'sofia.rojas@email.com', '1234', 'CLIENTE', true),
+    ('Pedro Sanchez', 'pedro.sanchez@email.com', '1234', 'CLIENTE', true),
+    ('Lucia Medina', 'lucia.medina@email.com', '1234', 'CLIENTE', true),
+    ('Admin 1', 'admin1@email.com', 'admin123', 'ADMIN', true ),
+    ('Admin 2', 'admin2@email.com', 'admin200758', 'ADMIN',true);
 
 -- TIPO PRODUCTO
  INSERT INTO tipo_producto (nombre_tipo, descripcion_producto, disponible) VALUES
@@ -29,17 +29,17 @@ INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
     ('Suplemento Vegano', 'Proteínas y vitaminas veganas', TRUE);
 
 -- PRODUCTOS
-INSERT INTO producto (id_tipo, nombre, descripcion, precio) VALUES
-    (1, 'Vitaminas C', 'Vitaminas C 500mg', 25.00),
-    (2, 'Proteina Whey', 'Proteina whey 1kg', 120.00),
-    (3, 'Barra de Almendra', 'Barra energética', 15.00),
-    (4, 'Jugo Natural', 'Jugo de frutas 500ml', 10.00),
-    (5, 'Camiseta Deportiva', 'Camiseta para entrenamiento', 40.00),
-    (6, 'Mancuernas 5kg', 'Set de mancuernas', 80.00),
-    (7, 'Banda Elastica', 'Banda de resistencia', 20.00),
-    (8, 'Zapatillas Run', 'Zapatillas para correr', 150.00),
-    (9, 'Rodillo Masaje', 'Rodillo para recuperación', 35.00),
-    (10, 'Proteina Vegana', 'Proteina vegetal 1kg', 130.00);
+INSERT INTO producto (id_tipo, nombre, descripcion, precio, disponible) VALUES
+    (1, 'Vitaminas C', 'Vitaminas C 500mg', 25.00,true),
+    (2, 'Proteina Whey', 'Proteina whey 1kg', 120.00,true),
+    (3, 'Barra de Almendra', 'Barra energética', 15.00,true),
+    (4, 'Jugo Natural', 'Jugo de frutas 500ml', 10.00, false),
+    (5, 'Camiseta Deportiva', 'Camiseta para entrenamiento', 40.00, true),
+    (6, 'Mancuernas 5kg', 'Set de mancuernas', 80.00, true),
+    (7, 'Banda Elastica', 'Banda de resistencia', 20.00, false),
+    (8, 'Zapatillas Run', 'Zapatillas para correr', 150.00,true),
+    (9, 'Rodillo Masaje', 'Rodillo para recuperación', 35.00,true),
+    (10, 'Proteina Vegana', 'Proteina vegetal 1kg', 130.00, true);
 
 -- PLANES
 INSERT INTO plan (nombre, duracion, precio, descripcion) VALUES

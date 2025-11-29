@@ -55,7 +55,7 @@ public class PaginasControllerAdmin {
 
     @GetMapping("/ver-CRUDUsuarios")
     public String mostrarCRUDUsuarios() {
-        return "admin/CRUDs/usuariosCRUD";
+        return "redirect:/usuario/list";
     }
 
     //Gestión
