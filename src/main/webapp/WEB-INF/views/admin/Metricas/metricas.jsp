@@ -42,7 +42,7 @@
 
         <div class="metrics-container">
             <!-- Métrica 1: Evolución de Suscripciones -->
-            <a href="${pageContext.request.contextPath}/metricaEvolucionSuscripciones" class="metric-card">
+            <a href="${pageContext.request.contextPath}/ver-metricaEvSuscripciones" class="metric-card">
                 <div class="metric-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
