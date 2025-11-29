@@ -95,6 +95,13 @@
             </div>
         </header>
 
+        <!-- Gráfico -->
+        <section class="chart-section">
+            <div class="chart-container">
+                <canvas id="evolucionChart" width="400" height="200"></canvas>
+            </div>
+        </section>
+
         <!-- Descripción de la Métrica -->
         <section class="description-section">
             <h3><i class="fas fa-info-circle"></i> Descripción de la Métrica</h3>
@@ -112,6 +119,157 @@
             <p><strong>Utilidad:</strong> Ayuda a identificar patrones estacionales, medir la efectividad de campañas de captación y detectar periodos donde las bajas superan a las altas para tomar decisiones estratégicas.</p>
         </section>
     </main>
+
+    <!-- Script para el gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Función para cargar los datos del backend
+        async function cargarDatosEvolucion() {
+            try {
+                const response = await fetch('${pageContext.request.contextPath}/api/metricas/evolucion-suscripciones');
+                const datos = await response.json();
+
+                renderizarGrafico(datos);
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+                // Mostrar datos de ejemplo si hay error
+                mostrarDatosEjemplo();
+            }
+        }
+
+        // Función para renderizar el gráfico
+        function renderizarGrafico(datos) {
+            const ctx = document.getElementById('evolucionChart').getContext('2d');
+
+            // Procesar datos para el gráfico
+            const labels = datos.map(item => {
+                const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                return `${meses[item.mes - 1]} ${item.anio}`;
+            });
+
+            const nuevasMembresias = datos.map(item => item.nuevas_membresias);
+            const bajas = datos.map(item => item.bajas);
+            const crecimientoNeto = datos.map(item => item.crecimiento_neto);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Nuevas Membresías',
+                            data: nuevasMembresias,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Bajas',
+                            data: bajas,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Crecimiento Neto',
+                            data: crecimientoNeto,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Evolución de Suscripciones - Últimos 12 Meses',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Membresías'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Periodo'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Función de respaldo con datos de ejemplo
+        function mostrarDatosEjemplo() {
+            const datosEjemplo = [
+                { anio: 2024, mes: 1, nuevas_membresias: 15, bajas: 5, crecimiento_neto: 10 },
+                { anio: 2024, mes: 2, nuevas_membresias: 18, bajas: 7, crecimiento_neto: 11 },
+                { anio: 2024, mes: 3, nuevas_membresias: 22, bajas: 8, crecimiento_neto: 14 },
+                { anio: 2024, mes: 4, nuevas_membresias: 20, bajas: 6, crecimiento_neto: 14 },
+                { anio: 2024, mes: 5, nuevas_membresias: 25, bajas: 10, crecimiento_neto: 15 },
+                { anio: 2024, mes: 6, nuevas_membresias: 30, bajas: 12, crecimiento_neto: 18 }
+            ];
+
+            renderizarGrafico(datosEjemplo);
+
+            // Mostrar mensaje de advertencia
+            const chartContainer = document.querySelector('.chart-container');
+            chartContainer.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                Se están mostrando datos de ejemplo. Verifique la conexión con el servidor.
+            </div>
+            <canvas id="evolucionChart" width="400" height="200"></canvas>
+        `;
+        }
+
+        // Cargar los datos cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', cargarDatosEvolucion);
+    </script>
+
+    <style>
+        .chart-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        .alert {
+            padding: 10px 15px;
+            background: #fef3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            color: #856404;
+        }
+    </style>
 </div>
 </body>
 </html>
