@@ -1,11 +1,8 @@
 package com.example.demo.MetricaEvolucionSuscripciones;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EvolucionSuscripcionesService {
-    int obtenerAltasMesActual();
-    int obtenerBajasMesActual();
-    int obtenerCrecimientoNeto();
-    List<EvolucionSuscripcionesDTO> obtenerComparativo();
+    List<Map<String, Object>> obtenerEvolucionSuscripciones();
 }
-
