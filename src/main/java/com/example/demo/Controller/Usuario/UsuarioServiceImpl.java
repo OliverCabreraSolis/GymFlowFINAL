@@ -13,6 +13,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.usuarioDAO = usuarioDAO;
     }
 
+    // 🆕 MÉTODOS NUEVOS PARA LOGIN - IMPLEMENTADOS
+    @Override
+    public Usuario obtenerUsuarioPorCredenciales(String correo, String contrasena) {
+        return usuarioDAO.obtenerUsuarioPorCorreoYContrasena(correo, contrasena);
+    }
+
+    @Override
+    public boolean existeCorreo(String correo) {
+        return usuarioDAO.existeCorreo(correo);
+    }
+
+    // MÉTODOS EXISTENTES DEL CRUD
     @Override
     public List<Usuario> listarUsuarios() {
         return usuarioDAO.listarUsuarios();
