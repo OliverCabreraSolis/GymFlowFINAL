@@ -90,7 +90,7 @@
             <div class="header-content">
                 <div>
                     <h2>Evolución de Suscripciones</h2>
-                    <p>Análisis comparativo de altas y bajas por periodo</p>
+                    <p>Análisis de nuevas membresías, bajas y crecimiento neto por periodo</p>
                 </div>
             </div>
         </header>
@@ -98,18 +98,18 @@
         <!-- Descripción de la Métrica -->
         <section class="description-section">
             <h3><i class="fas fa-info-circle"></i> Descripción de la Métrica</h3>
-            <p><strong>¿Qué mide?</strong> Esta métrica analiza el comportamiento de las suscripciones del gimnasio, comparando las nuevas altas de clientes contra las bajas o cancelaciones en cada periodo.</p>
+            <p><strong>¿Qué mide?</strong> Esta métrica analiza el comportamiento de las membresías del gimnasio, comparando las nuevas altas contra las bajas o cancelaciones registradas en cada periodo.</p>
 
-            <p><strong>Periodo de medición:</strong> Los datos se registran mensualmente, con un histórico de los últimos 12 meses disponible para análisis de tendencias.</p>
+            <p><strong>Periodo de medición:</strong> Los datos se analizan mensualmente, considerando un histórico de los últimos 12 meses para observar tendencias de crecimiento o caída.</p>
 
             <p><strong>Fuente de datos:</strong></p>
             <ul>
-                <li><strong>Nuevas Suscripciones:</strong> Se obtienen de la tabla <code>usuario</code> filtrando por <code>rol = 'CLIENTE'</code> y agrupando por <code>fecha_registro</code> (mes/año).</li>
-                <li><strong>Bajas:</strong> Se calculan mediante la tabla <code>membresias</code> donde <code>estado = 'CANCELADA'</code> o <code>fecha_fin</code> haya expirado sin renovación.</li>
-                <li><strong>Crecimiento Neto:</strong> Resultado de restar las bajas del total de nuevas suscripciones por periodo.</li>
+                <li><strong>Nuevas membresías:</strong> Se obtienen de la tabla <code>membresia</code>, agrupando por <code>fecha_inicio</code> (mes/año).</li>
+                <li><strong>Bajas:</strong> Se consideran las membresías con <code>estado = 'CANCELADA'</code> o aquellas cuyo <code>fecha_fin</code> expiró sin renovación.</li>
+                <li><strong>Crecimiento neto:</strong> Resultado de restar las bajas del total de nuevas membresías en cada periodo.</li>
             </ul>
 
-            <p><strong>Utilidad:</strong> Permite identificar patrones estacionales, evaluar el impacto de campañas de marketing, y detectar periodos críticos donde las bajas superan las altas para tomar acciones correctivas.</p>
+            <p><strong>Utilidad:</strong> Ayuda a identificar patrones estacionales, medir la efectividad de campañas de captación y detectar periodos donde las bajas superan a las altas para tomar decisiones estratégicas.</p>
         </section>
 
         <!-- KPI Cards -->
