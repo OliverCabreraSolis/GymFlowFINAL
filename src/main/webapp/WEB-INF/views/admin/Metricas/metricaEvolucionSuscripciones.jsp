@@ -104,7 +104,7 @@
 
             <p><strong>Fuente de datos:</strong></p>
             <ul>
-                <li><strong>Nuevas Suscripciones:</strong> Se obtienen de la tabla <code>usuarios</code> filtrando por <code>rol = 'CLIENTE'</code> y agrupando por <code>fecha_registro</code> (mes/año).</li>
+                <li><strong>Nuevas Suscripciones:</strong> Se obtienen de la tabla <code>usuario</code> filtrando por <code>rol = 'CLIENTE'</code> y agrupando por <code>fecha_registro</code> (mes/año).</li>
                 <li><strong>Bajas:</strong> Se calculan mediante la tabla <code>membresias</code> donde <code>estado = 'CANCELADA'</code> o <code>fecha_fin</code> haya expirado sin renovación.</li>
                 <li><strong>Crecimiento Neto:</strong> Resultado de restar las bajas del total de nuevas suscripciones por periodo.</li>
             </ul>

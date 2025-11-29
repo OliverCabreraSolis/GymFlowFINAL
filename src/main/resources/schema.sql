@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     nombre VARCHAR(200) NOT NULL,
     correo VARCHAR(200) NOT NULL UNIQUE,
     contrasena VARCHAR(200) NOT NULL,
-    rol VARCHAR(50) NOT NULL,
+    rol ENUM('CLIENTE', 'ADMINISTRADOR') NOT NULL,
     disponible BOOLEAN DEFAULT TRUE
     );
 
