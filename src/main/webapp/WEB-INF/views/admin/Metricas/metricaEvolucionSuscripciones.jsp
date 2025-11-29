@@ -6,8 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GymFlow - Evolución de Suscripciones</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/metricasStyles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/metricaEvSuscripcionesStyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
     <style>
         .bars-wrapper {
             display: flex;
@@ -138,20 +139,34 @@
         }
 
         // Función para renderizar el gráfico
+        // Función para renderizar el gráfico
         function renderizarGrafico(datos) {
             const ctx = document.getElementById('evolucionChart').getContext('2d');
 
-            // Procesar datos para el gráfico
+            console.log('Datos recibidos para gráfico:', datos);
+
+            // Procesar datos para el gráfico - USAR MAYÚSCULAS para coincidir con el JSON
             const labels = datos.map(item => {
                 const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                return `${meses[item.mes - 1]} ${item.anio}`;
+                const mesNumero = parseInt(item.MES) || 1; // MAYÚSCULA
+                return `${meses[mesNumero - 1]} ${item.ANIO}`; // MAYÚSCULA
             });
 
-            const nuevasMembresias = datos.map(item => item.nuevas_membresias);
-            const bajas = datos.map(item => item.bajas);
-            const crecimientoNeto = datos.map(item => item.crecimiento_neto);
+            const nuevasMembresias = datos.map(item => item.NUEVAS_MEMBRESIAS || 0); // MAYÚSCULA
+            const bajas = datos.map(item => item.BAJAS || 0); // MAYÚSCULA
+            const crecimientoNeto = datos.map(item => item.CRECIMIENTO_NETO || 0); // MAYÚSCULA
 
-            new Chart(ctx, {
+            console.log('Labels procesados:', labels);
+            console.log('Nuevas membresías:', nuevasMembresias);
+            console.log('Bajas:', bajas);
+            console.log('Crecimiento neto:', crecimientoNeto);
+
+            // Destruir gráfico anterior si existe
+            if (window.evolucionChartInstance) {
+                window.evolucionChartInstance.destroy();
+            }
+
+            window.evolucionChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -161,7 +176,7 @@
                             data: nuevasMembresias,
                             borderColor: '#10b981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 2,
+                            borderWidth: 3,
                             tension: 0.4,
                             fill: true
                         },
@@ -170,7 +185,7 @@
                             data: bajas,
                             borderColor: '#ef4444',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                            borderWidth: 2,
+                            borderWidth: 3,
                             tension: 0.4,
                             fill: true
                         },
@@ -179,7 +194,7 @@
                             data: crecimientoNeto,
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderWidth: 2,
+                            borderWidth: 3,
                             tension: 0.4,
                             fill: true
                         }
@@ -187,16 +202,27 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         title: {
                             display: true,
                             text: 'Evolución de Suscripciones - Últimos 12 Meses',
                             font: {
-                                size: 16
+                                size: 16,
+                                weight: 'bold'
                             }
                         },
                         legend: {
                             position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
                         }
                     },
                     scales: {
@@ -204,18 +230,33 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Cantidad de Membresías'
+                                text: 'Cantidad de Membresías',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                stepSize: 1
                             }
                         },
                         x: {
                             title: {
                                 display: true,
-                                text: 'Periodo'
+                                text: 'Periodo',
+                                font: {
+                                    weight: 'bold'
+                                }
                             }
                         }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'nearest'
                     }
                 }
             });
+
+            console.log('Gráfico renderizado exitosamente');
         }
 
         // Función de respaldo con datos de ejemplo
