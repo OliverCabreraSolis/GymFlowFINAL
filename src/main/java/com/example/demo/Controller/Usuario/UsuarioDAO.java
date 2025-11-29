@@ -12,4 +12,8 @@ public interface UsuarioDAO {
     void actualizarUsuario(Usuario usuario);
     void desactivarUsuario(Integer id);
     void reactivarUsuario(Integer id);
+
+    // 🆕 MÉTODOS NUEVOS PARA LOGIN
+    Usuario obtenerUsuarioPorCorreoYContrasena(String correo, String contrasena);
+    boolean existeCorreo(String correo);
 }

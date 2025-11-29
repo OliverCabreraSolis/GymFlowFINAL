@@ -27,6 +27,29 @@ public class UsuarioRepository implements UsuarioDAO {
         return usuario;
     };
 
+    // 🆕 MÉTODOS NUEVOS PARA LOGIN
+    @Override
+    public Usuario obtenerUsuarioPorCorreoYContrasena(String correo, String contrasena) {
+        String query = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
+        try {
+            return jdbcTemplate.queryForObject(query, usuarioRowMapper, correo, contrasena);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean existeCorreo(String correo) {
+        String query = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
+        try {
+            Integer count = jdbcTemplate.queryForObject(query, Integer.class, correo);
+            return count != null && count > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // MÉTODOS EXISTENTES DEL CRUD
     @Override
     public List<Usuario> listarUsuarios() {
         String query = "SELECT * FROM usuario WHERE disponible = TRUE ORDER BY nombre";

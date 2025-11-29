@@ -12,4 +12,8 @@ public interface UsuarioService {
     void actualizarUsuario(Usuario usuario);
     void desactivarUsuario(Integer id);
     void reactivarUsuario(Integer id);
+
+    // para login
+    Usuario obtenerUsuarioPorCredenciales(String correo, String contrasena);
+    boolean existeCorreo(String correo);
 }

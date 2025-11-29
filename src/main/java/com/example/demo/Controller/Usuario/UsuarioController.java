@@ -3,7 +3,9 @@ package com.example.demo.Controller.Usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -16,6 +18,99 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    // 🆕 MÉTODOS DE LOGIN Y REGISTRO
+    @GetMapping("/login")
+    public String mostrarLogin() {
+        return "login"; // Tu JSP de login
+    }
+
+    @PostMapping("/login")
+    public String login(
+            @RequestParam String correo,
+            @RequestParam String contrasena,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // Buscar usuario por correo y contraseña
+            Usuario usuario = usuarioService.obtenerUsuarioPorCredenciales(correo, contrasena);
+
+            if (usuario != null) {
+                if (!usuario.getDisponible()) {
+                    redirectAttributes.addFlashAttribute("error", "Usuario inactivo. Contacta al administrador.");
+                    return "redirect:/usuario/login";
+                }
+
+                // Guardar usuario en sesión
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("rol", usuario.getRol());
+                session.setAttribute("nombreUsuario", usuario.getNombre());
+                session.setAttribute("idUsuario", usuario.getIdUsuario());
+
+                // Redirigir según el rol
+                if ("ADMIN".equals(usuario.getRol())) {
+                    return "redirect:/ver-gestionInicio";  // ← Admin va a gestión
+                } else {
+                    return "redirect:/ver-inicio";  // ← Cliente va a inicio normal
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Credenciales incorrectas");
+                return "redirect:/usuario/login";
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error en el sistema: " + e.getMessage());
+            return "redirect:/usuario/login";
+        }
+    }
+
+    @PostMapping("/registrar")
+    public String registrarCliente(
+            @RequestParam String nombre,
+            @RequestParam String telefono,
+            @RequestParam String correo,
+            @RequestParam String contrasena,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // Verificar si el correo ya existe
+            if (usuarioService.existeCorreo(correo)) {
+                redirectAttributes.addFlashAttribute("errorRegistro", "El correo ya está registrado");
+                return "redirect:/usuario/login";
+            }
+
+            // Crear nuevo usuario SOLO como CLIENTE
+            Usuario usuario = new Usuario();
+            usuario.setNombre(nombre);
+            usuario.setCorreo(correo);
+            usuario.setContrasena(contrasena);
+            usuario.setRol("CLIENTE");  // ← SIEMPRE CLIENTE
+            usuario.setDisponible(true);
+
+            usuarioService.crearUsuario(usuario);
+
+            // Iniciar sesión automáticamente después del registro
+            session.setAttribute("usuario", usuario);
+            session.setAttribute("rol", usuario.getRol());
+            session.setAttribute("nombreUsuario", usuario.getNombre());
+            session.setAttribute("idUsuario", usuario.getIdUsuario());
+
+            // Redirigir al inicio de cliente
+            return "redirect:/ver-inicio";
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorRegistro", "Error en el registro: " + e.getMessage());
+            return "redirect:/usuario/login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/usuario/login";
+    }
+
+    // MÉTODOS CRUD EXISTENTES
     @GetMapping("/list")
     public String listarUsuarios(
             @RequestParam(required = false) Integer editarId,
@@ -46,7 +141,7 @@ public class UsuarioController {
 
         System.out.println("📦 Usuarios cargados: " + lista.size() + " elementos");
 
-        model.addAttribute("usuarios", lista); // 🚨 IMPORTANTE: "usuarios"
+        model.addAttribute("usuarios", lista);
         model.addAttribute("editarId", editarId);
         model.addAttribute("filtroActual", filtro);
 

@@ -8,7 +8,7 @@ public class PaginasController {
 
     @GetMapping("")
     public String mostrarLogin() {
-        return "login/login";
+        return "redirect:/usuario/login";
     }
 
 }
