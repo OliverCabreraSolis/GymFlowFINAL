@@ -55,17 +55,29 @@ INSERT INTO plan (nombre, duracion, precio, descripcion) VALUES
     ('Plan Estudiantil', '1 Mes', 30.00, 'Plan económico para estudiantes');
 
 -- MEMBRESIAS
-INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, descripcion, precio) VALUES
-      (1, 1, 'Membresia Juan', '2025-11-01', '2025-12-01', 'Plan Básico', 50.00),
-      (2, 2, 'Membresia Maria', '2025-11-01', '2026-02-01', 'Plan Premium', 140.00),
-      (3, 3, 'Membresia Carlos', '2025-11-01', '2026-11-01', 'Plan Anual', 500.00),
-      (4, 4, 'Membresia Ana', '2025-11-01', '2025-12-01', 'Plan Intensivo', 70.00),
-      (5, 5, 'Membresia Luis', '2025-11-01', '2025-12-01', 'Plan Yoga', 60.00),
-      (6, 6, 'Membresia Sofia', '2025-11-01', '2026-02-01', 'Plan Crossfit', 200.00),
-      (7, 7, 'Membresia Pedro', '2025-11-01', '2025-12-01', 'Plan Nutrición', 40.00),
-      (8, 8, 'Membresia Lucia', '2025-11-01', '2026-05-01', 'Plan Online', 180.00),
-      (9, 9, 'Membresia David', '2025-11-01', '2026-11-01', 'Plan Familiar', 900.00),
-      (10, 10, 'Membresia Camila', '2025-11-01', '2025-12-01', 'Plan Estudiantil', 30.00);
+-- Datos históricos para las métricas (últimos 12 meses)
+INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, descripcion, precio, estado) VALUES
+-- 2024
+    (1, 1, 'Membresia Histórica 1', '2024-01-15', '2024-02-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (2, 1, 'Membresia Histórica 2', '2024-01-20', '2024-02-20', 'Plan Básico', 50.00, 'CANCELADA'),
+    (3, 2, 'Membresia Histórica 3', '2024-02-10', '2024-05-10', 'Plan Premium', 140.00, 'ACTIVA'),
+    (4, 1, 'Membresia Histórica 4', '2024-02-15', '2024-03-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (5, 3, 'Membresia Histórica 5', '2024-03-01', '2025-03-01', 'Plan Anual', 500.00, 'ACTIVA'),
+    (6, 1, 'Membresia Histórica 6', '2024-03-10', '2024-04-10', 'Plan Básico', 50.00, 'CANCELADA'),
+    (7, 2, 'Membresia Histórica 7', '2024-04-05', '2024-07-05', 'Plan Premium', 140.00, 'ACTIVA'),
+    (8, 1, 'Membresia Histórica 8', '2024-04-15', '2024-05-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (9, 4, 'Membresia Histórica 9', '2024-05-01', '2024-06-01', 'Plan Intensivo', 70.00, 'ACTIVA'),
+    (10, 1, 'Membresia Histórica 10', '2024-05-10', '2024-06-10', 'Plan Básico', 50.00, 'CANCELADA'),
+    (11, 2, 'Membresia Histórica 11', '2024-06-01', '2024-09-01', 'Plan Premium', 140.00, 'ACTIVA'),
+    (12, 1, 'Membresia Histórica 12', '2024-06-15', '2024-07-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (13, 5, 'Membresia Histórica 13', '2024-07-01', '2024-08-01', 'Plan Yoga', 60.00, 'ACTIVA'),
+    (14, 1, 'Membresia Histórica 14', '2024-07-10', '2024-08-10', 'Plan Básico', 50.00, 'CANCELADA'),
+    (15, 2, 'Membresia Histórica 15', '2024-08-05', '2024-11-05', 'Plan Premium', 140.00, 'ACTIVA'),
+    (16, 1, 'Membresia Histórica 16', '2024-08-15', '2024-09-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (17, 6, 'Membresia Histórica 17', '2024-09-01', '2024-12-01', 'Plan Crossfit', 200.00, 'ACTIVA'),
+    (18, 1, 'Membresia Histórica 18', '2024-09-10', '2024-10-10', 'Plan Básico', 50.00, 'CANCELADA'),
+    (19, 2, 'Membresia Histórica 19', '2024-10-01', '2025-01-01', 'Plan Premium', 140.00, 'ACTIVA'),
+    (20, 1, 'Membresia Histórica 20', '2024-10-15', '2024-11-15', 'Plan Básico', 50.00, 'ACTIVA');
 
 -- PAGOS
 INSERT INTO pago (total, metodo_pago, id_usuario) VALUES
