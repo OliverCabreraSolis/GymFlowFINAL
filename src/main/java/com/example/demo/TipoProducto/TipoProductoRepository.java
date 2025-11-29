@@ -16,7 +16,7 @@ public class TipoProductoRepository implements TipoProductoDAO {
     }
 
     private final RowMapper<TipoProducto> tipoProductoRowMapper = (rs, rowNum) -> {
-        // 🚨 CORREGIDO: Usar mayúsculas para H2
+        // mayúsculas para H2
         TipoProducto tipo = new TipoProducto();
         tipo.setIdTipo(rs.getInt("ID_TIPO"));
         tipo.setNombreTipo(rs.getString("NOMBRE_TIPO"));

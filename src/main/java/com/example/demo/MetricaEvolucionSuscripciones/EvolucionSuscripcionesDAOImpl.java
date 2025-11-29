@@ -17,18 +17,23 @@ public class EvolucionSuscripcionesDAOImpl implements EvolucionSuscripcionesDAO 
     @Override
     public List<Map<String, Object>> obtenerDatosEvolucionSuscripciones() {
         String sql = """
-            SELECT 
-                TO_CHAR(fecha_inicio, 'YYYY-MM') as periodo,
-                EXTRACT(YEAR FROM fecha_inicio) as anio,
-                EXTRACT(MONTH FROM fecha_inicio) as mes,
-                COUNT(*) as nuevas_membresias,
-                SUM(CASE WHEN estado = 'CANCELADA' OR fecha_fin < CURRENT_DATE THEN 1 ELSE 0 END) as bajas,
-                (COUNT(*) - SUM(CASE WHEN estado = 'CANCELADA' OR fecha_fin < CURRENT_DATE THEN 1 ELSE 0 END)) as crecimiento_neto
-            FROM membresia 
-            WHERE fecha_inicio >= CURRENT_DATE - INTERVAL '12' MONTH
-            GROUP BY EXTRACT(YEAR FROM fecha_inicio), EXTRACT(MONTH FROM fecha_inicio), TO_CHAR(fecha_inicio, 'YYYY-MM')
-            ORDER BY anio, mes
-            """;
+        SELECT 
+            YEAR(fecha_inicio) AS anio,
+            MONTH(fecha_inicio) AS mes,
+            COUNT(*) AS nuevas_membresias,
+            SUM(CASE 
+                WHEN estado = 'CANCELADA' THEN 1 
+                ELSE 0 
+            END) AS bajas,
+            (COUNT(*) - SUM(CASE 
+                WHEN estado = 'CANCELADA' THEN 1 
+                ELSE 0 
+            END)) AS crecimiento_neto
+        FROM membresia
+        WHERE fecha_inicio >= DATEADD('MONTH', -12, CURRENT_DATE)
+        GROUP BY YEAR(fecha_inicio), MONTH(fecha_inicio)
+        ORDER BY anio, mes
+        """;
 
         return jdbcTemplate.queryForList(sql);
     }

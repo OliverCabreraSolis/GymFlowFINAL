@@ -139,29 +139,34 @@
         }
 
         // Función para renderizar el gráfico
-        // Función para renderizar el gráfico
         function renderizarGrafico(datos) {
             const ctx = document.getElementById('evolucionChart').getContext('2d');
 
             console.log('Datos recibidos para gráfico:', datos);
 
-            // Procesar datos para el gráfico - USAR MAYÚSCULAS para coincidir con el JSON
+            // Procesar datos para el gráfico
             const labels = datos.map(item => {
                 const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                const mesNumero = parseInt(item.MES) || 1; // MAYÚSCULA
-                return `${meses[mesNumero - 1]} ${item.ANIO}`; // MAYÚSCULA
+                const mesNumero = parseInt(item.MES) - 1; // Restar 1 porque los arrays empiezan en 0
+                const anio = parseInt(item.ANIO);
+
+                if (mesNumero >= 0 && mesNumero < meses.length) {
+                    return `${meses[mesNumero]} ${anio}`;
+                } else {
+                    return `Mes ${item.MES} ${anio}`;
+                }
             });
 
-            const nuevasMembresias = datos.map(item => item.NUEVAS_MEMBRESIAS || 0); // MAYÚSCULA
-            const bajas = datos.map(item => item.BAJAS || 0); // MAYÚSCULA
-            const crecimientoNeto = datos.map(item => item.CRECIMIENTO_NETO || 0); // MAYÚSCULA
+            const nuevasMembresias = datos.map(item => parseInt(item.NUEVAS_MEMBRESIAS) || 0);
+            const bajas = datos.map(item => parseInt(item.BAJAS) || 0);
+            const crecimientoNeto = datos.map(item => parseInt(item.CRECIMIENTO_NETO) || 0);
 
             console.log('Labels procesados:', labels);
             console.log('Nuevas membresías:', nuevasMembresias);
             console.log('Bajas:', bajas);
             console.log('Crecimiento neto:', crecimientoNeto);
 
-            // Destruir gráfico anterior si existe
+            // Resto del código para renderizar el gráfico permanece igual...
             if (window.evolucionChartInstance) {
                 window.evolucionChartInstance.destroy();
             }
@@ -177,8 +182,8 @@
                             borderColor: '#10b981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             borderWidth: 3,
-                            tension: 0.4,
-                            fill: true
+                            tension: 0.1,
+                            fill: false
                         },
                         {
                             label: 'Bajas',
@@ -186,8 +191,8 @@
                             borderColor: '#ef4444',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
                             borderWidth: 3,
-                            tension: 0.4,
-                            fill: true
+                            tension: 0.1,
+                            fill: false
                         },
                         {
                             label: 'Crecimiento Neto',
@@ -195,8 +200,8 @@
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 3,
-                            tension: 0.4,
-                            fill: true
+                            tension: 0.1,
+                            fill: false
                         }
                     ]
                 },
@@ -207,56 +212,21 @@
                         title: {
                             display: true,
                             text: 'Evolución de Suscripciones - Últimos 12 Meses',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
+                            font: { size: 16, weight: 'bold' }
                         },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false
-                        }
+                        legend: { position: 'top' }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Cantidad de Membresías',
-                                font: {
-                                    weight: 'bold'
-                                }
-                            },
-                            ticks: {
-                                stepSize: 1
-                            }
+                            title: { display: true, text: 'Cantidad de Membresías' }
                         },
                         x: {
-                            title: {
-                                display: true,
-                                text: 'Periodo',
-                                font: {
-                                    weight: 'bold'
-                                }
-                            }
+                            title: { display: true, text: 'Periodo' }
                         }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'nearest'
                     }
                 }
             });
-
-            console.log('Gráfico renderizado exitosamente');
         }
 
         // Función de respaldo con datos de ejemplo
