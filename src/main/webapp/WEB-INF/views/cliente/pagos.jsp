@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -13,15 +12,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/UsuarioStyles.css">
 
     <!-- Iconos Font Awesome -->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
-<body class="pagos-page">
+<body>
 <div class="dashboard">
-
     <%@ include file='barra_tareas.jsp' %>
 
     <!-- Contenido principal -->
@@ -82,7 +77,6 @@
                 <p>Email: <a href="mailto:juanperez@gmail.com">juanperez@gmail.com</a></p>
                 <p>Membresía: Premium</p>
                 <p>Pago: Tarjeta</p>
-
             </div>
 
             <div class="pago-card">
@@ -90,14 +84,12 @@
                 <p>Email: <a href="mailto:marialopez@gmail.com">marialopez@gmail.com</a></p>
                 <p>Membresía: Básico</p>
                 <p>Pago: Efectivo</p>
-
             </div>
         </section>
     </main>
 </div>
 
 <!-- Scripts -->
-
-
+<script src="${pageContext.request.contextPath}/js/navegacion.js"></script>
 </body>
 </html>
