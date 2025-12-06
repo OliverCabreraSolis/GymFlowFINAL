@@ -2,7 +2,29 @@
 -- INSERCIONES COMPLETAS
 -- ============================
 
-
+-- USUARIOS
+INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES
+      ('Juan Perez', 'juan@email.com', 'password123', 'CLIENTE'),
+      ('Maria Garcia', 'maria@email.com', 'password123', 'CLIENTE'),
+      ('Carlos Lopez', 'carlos@email.com', 'password123', 'CLIENTE'),
+      ('Ana Martinez', 'ana@email.com', 'password123', 'CLIENTE'),
+      ('Luis Rodriguez', 'luis@email.com', 'password123', 'CLIENTE'),
+      ('Sofia Hernandez', 'sofia@email.com', 'password123', 'CLIENTE'),
+      ('Pedro Diaz', 'pedro@email.com', 'password123', 'CLIENTE'),
+      ('Lucia Torres', 'lucia@email.com', 'password123', 'CLIENTE'),
+      ('David Ramirez', 'david@email.com', 'password123', 'CLIENTE'),
+      ('Camila Flores', 'camila@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 11', 'user11@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 12', 'user12@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 13', 'user13@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 14', 'user14@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 15', 'user15@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 16', 'user16@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 17', 'user17@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 18', 'user18@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 19', 'user19@email.com', 'password123', 'CLIENTE'),
+      ('Usuario 20', 'user20@email.com', 'password123', 'CLIENTE'),
+      ('Admin User', 'admin@gymflow.com', 'admin123', 'ADMINISTRADOR');
 -- TIPO PRODUCTO
  INSERT INTO tipo_producto (nombre_tipo, descripcion_producto, disponible) VALUES
     ('Suplemento', 'Vitaminas y suplementos nutricionales', TRUE),
