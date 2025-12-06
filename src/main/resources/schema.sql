@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS membresia (
     fecha_fin DATE NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10,2),
-    estado VARCHAR(20) DEFAULT 'ACTIVA' CHECK (estado IN ('ACTIVA', 'CANCELADA')),
+    estado VARCHAR(20) DEFAULT 'ACTIVA' CHECK (estado IN ('ACTIVA', 'VENCIDA', 'CANCELADA')),
     disponible BOOLEAN DEFAULT TRUE,
     CONSTRAINT fk_usuario_membresia FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
     CONSTRAINT fk_plan_membresia FOREIGN KEY (id_plan) REFERENCES plan(id_plan)

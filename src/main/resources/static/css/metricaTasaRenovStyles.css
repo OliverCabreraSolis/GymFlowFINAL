@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+}
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo {
+    padding: 30px 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #f8fafc;
+}
+
+.logo p {
+    font-size: 14px;
+    color: #cbd5e1;
+    opacity: 0.8;
+}
+
+.nav-menu {
+    padding: 20px 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border-left-color: #3b82f6;
+}
+
+.nav-item.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-left-color: #3b82f6;
+}
+
+.nav-item i {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 30px;
+    background-color: #f8fafc;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+.breadcrumb a {
+    color: #64748b;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.breadcrumb a:hover {
+    color: #3b82f6;
+}
+
+.breadcrumb i {
+    margin-right: 8px;
+}
+
+/* Header */
+.header {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* Chart Section */
+.chart-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    position: relative;
+    height: 500px;
+    width: 100%;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.alert i {
+    margin-right: 8px;
+}
+
+.alert-info {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Description Section */
+.description-section {
+    background: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.description-section h3 {
+    color: #1e293b;
+    margin-bottom: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.description-section h3 i {
+    margin-right: 10px;
+    color: #3b82f6;
+}
+
+.description-section p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.description-section strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.description-section ul {
+    color: #475569;
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+.description-section ul li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.description-section code {
+    background: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #1e293b;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .main-content {
+        margin-left: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .chart-container {
+        height: 400px;
+    }
+}
