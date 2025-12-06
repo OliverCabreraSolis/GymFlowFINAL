@@ -219,88 +219,50 @@
         // Variables globales
         let metodosPagoChartInstance = null;
         let tipoGraficoActual = 'pie';
-        let datosOriginales = [];
+        let datosGrafico = null;
 
         // Colores para los métodos de pago
         const coloresMetodos = {
-            'EFECTIVO': '#10b981',      // Verde
-            'TARJETA': '#3b82f6',       // Azul
-            'TRANSFERENCIA': '#8b5cf6', // Violeta
-            'YAPE': '#f59e0b',          // Amarillo
-            'PLIN': '#ef4444'           // Rojo
+            'EFECTIVO': '#10b981',
+            'TARJETA': '#3b82f6',
+            'TRANSFERENCIA': '#8b5cf6',
+            'YAPE': '#f59e0b',
+            'PLIN': '#ef4444'
         };
-
-        // Función para mostrar/ocultar elementos
-        function showElement(id, show) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.style.display = show ? 'block' : 'none';
-            }
-        }
-
-        // Función para mostrar error
-        function showError(message) {
-            const errorElement = document.getElementById('chartError');
-            if (errorElement) {
-                errorElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + message;
-                errorElement.style.display = 'block';
-            }
-        }
-
-        // Función para cambiar tipo de gráfico
-        function cambiarTipoGrafico(tipo) {
-            tipoGraficoActual = tipo;
-
-            // Actualizar botones
-            document.querySelectorAll('.chart-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Re-renderizar gráfico si ya hay datos
-            if (datosOriginales.length > 0) {
-                renderizarGrafico(datosOriginales);
-            }
-        }
 
         // Función principal para cargar datos
         async function cargarDatosMetodosPago() {
-            // Mostrar loading
-            showElement('chartLoading', true);
-            showElement('chartError', false);
-            showElement('chartNoData', false);
-            showElement('estadisticas', false);
-
             try {
+                document.getElementById('chartLoading').style.display = 'block';
+                document.getElementById('chartError').style.display = 'none';
+                document.getElementById('chartNoData').style.display = 'none';
+                document.getElementById('estadisticas').style.display = 'none';
+
                 const response = await fetch('${pageContext.request.contextPath}/api/metricas/metodos-pago');
 
                 if (!response.ok) {
-                    throw new Error('Error al cargar datos del servidor');
+                    throw new Error('Error al cargar datos');
                 }
 
-                const datos = await response.json();
+                datosGrafico = await response.json();
+                console.log('Datos recibidos del backend:', datosGrafico);
 
-                // Ocultar loading
-                showElement('chartLoading', false);
+                document.getElementById('chartLoading').style.display = 'none';
 
-                // Verificar si hay datos
-                if (!datos || datos.length === 0) {
-                    showElement('chartNoData', true);
+                if (!datosGrafico || datosGrafico.length === 0) {
+                    document.getElementById('chartNoData').style.display = 'block';
                     return;
                 }
 
-                // Guardar datos originales
-                datosOriginales = datos;
-
-                // Mostrar estadísticas
-                mostrarEstadisticas(datos);
-
-                // Renderizar gráfico
-                renderizarGrafico(datos);
+                mostrarEstadisticas(datosGrafico);
+                renderizarGrafico(datosGrafico);
 
             } catch (error) {
-                showElement('chartLoading', false);
-                showError('No se pudieron cargar los datos: ' + error.message);
+                console.error('Error:', error);
+                document.getElementById('chartLoading').style.display = 'none';
+                document.getElementById('chartError').innerHTML =
+                    '<i class="fas fa-exclamation-triangle"></i> Error: ' + error.message;
+                document.getElementById('chartError').style.display = 'block';
             }
         }
 
@@ -308,93 +270,139 @@
         function mostrarEstadisticas(datos) {
             const container = document.getElementById('estadisticas');
             container.innerHTML = '';
-            container.style.display = 'grid';
 
-            // Calcular totales
             let totalTransacciones = 0;
             let totalMonto = 0;
             let metodosDigitales = 0;
 
             datos.forEach(item => {
-                totalTransacciones += parseInt(item.CANTIDAD) || 0;
+                totalTransacciones += parseFloat(item.CANTIDAD) || 0;
                 totalMonto += parseFloat(item.MONTO_TOTAL) || 0;
 
-                // Contar métodos digitales
                 const metodo = item.METODO;
                 if (metodo === 'TARJETA' || metodo === 'TRANSFERENCIA' || metodo === 'YAPE' || metodo === 'PLIN') {
-                    metodosDigitales += parseInt(item.CANTIDAD) || 0;
+                    metodosDigitales += parseFloat(item.CANTIDAD) || 0;
                 }
             });
 
             const porcentajeDigital = totalTransacciones > 0 ?
                 Math.round((metodosDigitales / totalTransacciones) * 100) : 0;
 
-            // Crear tarjetas de estadísticas
             const estadisticas = [
-                { label: 'Total Transacciones', value: totalTransacciones, icon: 'fa-receipt' },
-                { label: 'Monto Total', value: 'S/ ' + totalMonto.toFixed(2), icon: 'fa-money-bill-wave' },
-                { label: 'Métodos Digitales', value: metodosDigitales, icon: 'fa-mobile-alt' },
-                { label: '% Digital', value: porcentajeDigital + '%', icon: 'fa-chart-line' }
+                {
+                    label: 'Total Transacciones',
+                    value: totalTransacciones,
+                    icon: 'fa-receipt',
+                    color: '#3b82f6'
+                },
+                {
+                    label: 'Monto Total',
+                    value: 'S/ ' + totalMonto.toFixed(2),
+                    icon: 'fa-money-bill-wave',
+                    color: '#10b981'
+                },
+                {
+                    label: 'Métodos Digitales',
+                    value: metodosDigitales,
+                    icon: 'fa-mobile-alt',
+                    color: '#8b5cf6'
+                },
+                {
+                    label: '% Digital',
+                    value: porcentajeDigital + '%',
+                    icon: 'fa-chart-line',
+                    color: '#f59e0b'
+                }
             ];
 
             estadisticas.forEach(stat => {
                 const card = document.createElement('div');
                 card.className = 'stat-card';
                 card.innerHTML = `
-                    <i class="fas ${stat.icon} fa-2x" style="color: #3b82f6; margin-bottom: 10px;"></i>
-                    <div class="stat-value">${stat.value}</div>
-                    <div class="stat-label">${stat.label}</div>
-                `;
+            <i class="fas ${stat.icon} fa-2x" style="color: ${stat.color}; margin-bottom: 10px;"></i>
+            <div class="stat-value">${stat.value}</div>
+            <div class="stat-label">${stat.label}</div>
+        `;
                 container.appendChild(card);
             });
+
+            container.style.display = 'grid';
         }
 
-        // Función para renderizar el gráfico
+        // Función para cambiar tipo de gráfico
+        function cambiarTipoGrafico(tipo) {
+            tipoGraficoActual = tipo;
+
+            document.querySelectorAll('.chart-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.chart-btn').classList.add('active');
+
+            if (datosGrafico) {
+                renderizarGrafico(datosGrafico);
+            }
+        }
+
+        // Función para renderizar el gráfico - CORREGIDA
         function renderizarGrafico(datos) {
             const ctx = document.getElementById('metodosPagoChart').getContext('2d');
 
-            // Preparar datos para Chart.js
+            // Preparar datos
             const labels = datos.map(item => item.METODO);
-            const valores = datos.map(item => parseInt(item.CANTIDAD) || 0);
+            const valores = datos.map(item => parseFloat(item.CANTIDAD) || 0);
             const porcentajes = datos.map(item => parseFloat(item.PORCENTAJE) || 0);
-            const montos = datos.map(item => 'S/ ' + (parseFloat(item.MONTO_TOTAL) || 0).toFixed(2));
-            const colores = labels.map(label => coloresMetodos[label] || '#6b7280');
+            const montos = datos.map(item => parseFloat(item.MONTO_TOTAL) || 0);
+            const colores = labels.map(lbl => coloresMetodos[lbl] || '#6b7280');
 
-            // Configuración común
-            const configBase = {
+            console.log('Datos procesados:', { labels, valores, porcentajes, montos });
+
+            if (metodosPagoChartInstance) {
+                metodosPagoChartInstance.destroy();
+            }
+
+            const config = {
+                type: tipoGraficoActual === 'pie' ? 'pie' : 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
+                        label: 'Cantidad de Transacciones',
                         data: valores,
                         backgroundColor: colores,
                         borderColor: '#fff',
-                        borderWidth: 2
+                        borderWidth: 2,
+                        hoverOffset: tipoGraficoActual === 'pie' ? 15 : 0
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
+                        title: {
+                            display: true,
+                            text: tipoGraficoActual === 'pie' ?
+                                'Distribución de Métodos de Pago' :
+                                'Métodos de Pago - Cantidad de Transacciones',
+                            font: { size: 16, weight: 'bold' },
+                            padding: { bottom: 20 }
+                        },
                         legend: {
                             position: 'right',
                             labels: {
-                                font: {
-                                    size: 14
-                                },
+                                font: { size: 14 },
                                 padding: 20,
                                 generateLabels: function(chart) {
                                     const data = chart.data;
                                     if (data.labels.length && data.datasets.length) {
-                                        return data.labels.map((label, i) => {
-                                            const value = data.datasets[0].data[i];
+                                        return data.labels.map((lbl, i) => {
+                                            const cantidad = valores[i];
                                             const porcentaje = porcentajes[i];
                                             const monto = montos[i];
 
                                             return {
-                                                text: `${label}: ${value} (${porcentaje}%) - ${monto}`,
-                                                fillStyle: data.datasets[0].backgroundColor[i],
-                                                strokeStyle: data.datasets[0].borderColor,
-                                                lineWidth: data.datasets[0].borderWidth,
+                                                text: `${lbl}: ${cantidad} (${porcentaje}%) - S/ ${monto.toFixed(2)}`,
+                                                fillStyle: colores[i],
+                                                strokeStyle: '#fff',
+                                                lineWidth: 2,
                                                 hidden: false,
                                                 index: i
                                             };
@@ -407,89 +415,37 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const porcentaje = porcentajes[context.dataIndex] || 0;
-                                    const monto = montos[context.dataIndex] || '';
-                                    return `${label}: ${value} transacciones (${porcentaje}%) - ${monto}`;
+                                    const idx = context.dataIndex;
+                                    const lbl = labels[idx];
+                                    const cantidad = valores[idx];
+                                    const porcentaje = porcentajes[idx];
+                                    const monto = montos[idx];
+
+                                    return `${lbl}: ${cantidad} transacciones (${porcentaje}%) - S/ ${monto.toFixed(2)}`;
                                 }
                             }
                         }
-                    }
+                    },
+                    scales: tipoGraficoActual === 'bar' ? {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Cantidad de Transacciones' },
+                            ticks: { stepSize: 1 }
+                        },
+                        x: {
+                            title: { display: true, text: 'Método de Pago' }
+                        }
+                    } : undefined
                 }
             };
 
-            // Destruir gráfico anterior si existe
-            if (metodosPagoChartInstance) {
-                metodosPagoChartInstance.destroy();
-            }
-
-            // Crear nuevo gráfico según el tipo seleccionado
-            if (tipoGraficoActual === 'pie') {
-                metodosPagoChartInstance = new Chart(ctx, {
-                    type: 'pie',
-                    ...configBase,
-                    options: {
-                        ...configBase.options,
-                        plugins: {
-                            ...configBase.options.plugins,
-                            title: {
-                                display: true,
-                                text: 'Distribución de Métodos de Pago',
-                                font: {
-                                    size: 16,
-                                    weight: 'bold'
-                                },
-                                padding: { bottom: 20 }
-                            }
-                        }
-                    }
-                });
-            } else {
-                metodosPagoChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    ...configBase,
-                    options: {
-                        ...configBase.options,
-                        plugins: {
-                            ...configBase.options.plugins,
-                            title: {
-                                display: true,
-                                text: 'Métodos de Pago - Cantidad de Transacciones',
-                                font: {
-                                    size: 16,
-                                    weight: 'bold'
-                                },
-                                padding: { bottom: 20 }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Cantidad de Transacciones'
-                                },
-                                ticks: {
-                                    stepSize: 1
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Método de Pago'
-                                }
-                            }
-                        }
-                    }
-                });
-            }
+            metodosPagoChartInstance = new Chart(ctx, config);
         }
 
-        // Cargar datos cuando la página esté lista
+        // Cargar datos al iniciar
         document.addEventListener('DOMContentLoaded', cargarDatosMetodosPago);
 
-        // Redimensionar gráfico al cambiar tamaño de ventana
+        // Redimensionar gráfico
         window.addEventListener('resize', function() {
             if (metodosPagoChartInstance) {
                 metodosPagoChartInstance.resize();

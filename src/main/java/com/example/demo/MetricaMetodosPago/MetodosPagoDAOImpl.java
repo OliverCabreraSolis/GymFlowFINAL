@@ -21,7 +21,7 @@ public class MetodosPagoDAOImpl implements MetodosPagoDAO {
                 metodo_pago AS METODO,
                 COUNT(*) AS CANTIDAD,
                 SUM(total) AS MONTO_TOTAL,
-                ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS PORCENTAJE
+                CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM pago), 2) AS DECIMAL(5,2)) AS PORCENTAJE
             FROM pago
             WHERE metodo_pago IS NOT NULL
             GROUP BY metodo_pago
