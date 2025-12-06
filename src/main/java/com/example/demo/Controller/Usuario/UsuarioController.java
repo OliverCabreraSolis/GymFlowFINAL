@@ -17,52 +17,58 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
-    // 🆕 MÉTODOS DE LOGIN Y REGISTRO
+    // 📱 MOSTRAR PÁGINA DE LOGIN
     @GetMapping("/login")
-    public String mostrarLogin() {
-        return "login"; // Tu JSP de login
+    public String mostrarLogin(Model model) {
+        System.out.println(" UsuarioController: Mostrando login desde /public/login.jsp");
+        return "public/login";  // ← ¡IMPORTANTE! Ahora busca en carpeta "public"
     }
 
+    // 🔐 PROCESAR LOGIN - CORREGIDO CON "ADMINISTRADOR"
     @PostMapping("/login")
-    public String login(
+    public String procesarLogin(
             @RequestParam String correo,
             @RequestParam String contrasena,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
+        System.out.println("🎯 Procesando login para: " + correo);
+
         try {
-            // Buscar usuario por correo y contraseña
             Usuario usuario = usuarioService.obtenerUsuarioPorCredenciales(correo, contrasena);
 
             if (usuario != null) {
                 if (!usuario.getDisponible()) {
-                    redirectAttributes.addFlashAttribute("error", "Usuario inactivo. Contacta al administrador.");
+                    redirectAttributes.addFlashAttribute("error", "❌ Usuario inactivo");
                     return "redirect:/usuario/login";
                 }
 
-                // Guardar usuario en sesión
+                // Guardar en sesión
                 session.setAttribute("usuario", usuario);
                 session.setAttribute("rol", usuario.getRol());
                 session.setAttribute("nombreUsuario", usuario.getNombre());
                 session.setAttribute("idUsuario", usuario.getIdUsuario());
 
-                // Redirigir según el rol
-                if ("ADMIN".equals(usuario.getRol())) {
-                    return "redirect:/ver-gestionInicio";  // ← Admin va a gestión
+                System.out.println("✅ Login exitoso: " + usuario.getNombre() + " - Rol: " + usuario.getRol());
+
+                // Redirigir según rol
+                if ("ADMINISTRADOR".equals(usuario.getRol())) {
+                    return "redirect:/ver-gestionInicio";
                 } else {
-                    return "redirect:/ver-inicio";  // ← Cliente va a inicio normal
+                    return "redirect:/ver-inicio";
                 }
             } else {
-                redirectAttributes.addFlashAttribute("error", "Credenciales incorrectas");
+                redirectAttributes.addFlashAttribute("error", "❌ Credenciales incorrectas");
                 return "redirect:/usuario/login";
             }
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error en el sistema: " + e.getMessage());
+            System.err.println("❌ Error login: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "⚠️ Error del sistema");
             return "redirect:/usuario/login";
         }
     }
 
+    // 📝 PROCESAR REGISTRO (SOLO CLIENTE)
     @PostMapping("/registrar")
     public String registrarCliente(
             @RequestParam String nombre,
@@ -72,41 +78,56 @@ public class UsuarioController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
+        System.out.println("📝 Registro intento: " + correo);
+
         try {
-            // Verificar si el correo ya existe
+            // Verificar si el correo ya existe (JDBC)
             if (usuarioService.existeCorreo(correo)) {
-                redirectAttributes.addFlashAttribute("errorRegistro", "El correo ya está registrado");
+                redirectAttributes.addFlashAttribute("errorRegistro", "❌ Correo ya registrado");
                 return "redirect:/usuario/login";
             }
 
-            // Crear nuevo usuario SOLO como CLIENTE
+            // Crear usuario CLIENTE
             Usuario usuario = new Usuario();
             usuario.setNombre(nombre);
             usuario.setCorreo(correo);
             usuario.setContrasena(contrasena);
-            usuario.setRol("CLIENTE");  // ← SIEMPRE CLIENTE
+            usuario.setRol("CLIENTE"); // Solo cliente
             usuario.setDisponible(true);
 
+            // JDBC puro - Insert
             usuarioService.crearUsuario(usuario);
 
-            // Iniciar sesión automáticamente después del registro
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("rol", usuario.getRol());
-            session.setAttribute("nombreUsuario", usuario.getNombre());
-            session.setAttribute("idUsuario", usuario.getIdUsuario());
+            // Obtener usuario recién creado
+            Usuario usuarioCreado = usuarioService.obtenerUsuarioPorCredenciales(correo, contrasena);
 
-            // Redirigir al inicio de cliente
-            return "redirect:/ver-inicio";
+            if (usuarioCreado != null) {
+                // Iniciar sesión
+                session.setAttribute("usuario", usuarioCreado);
+                session.setAttribute("rol", usuarioCreado.getRol());
+                session.setAttribute("nombreUsuario", usuarioCreado.getNombre());
+                session.setAttribute("idUsuario", usuarioCreado.getIdUsuario());
+
+                System.out.println("✅ Registro exitoso ID: " + usuarioCreado.getIdUsuario());
+                return "redirect:/ver-inicio";
+            } else {
+                redirectAttributes.addFlashAttribute("errorRegistro", "⚠️ Error creando cuenta");
+                return "redirect:/usuario/login";
+            }
 
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorRegistro", "Error en el registro: " + e.getMessage());
+            System.err.println("❌ Error registro: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorRegistro", "⚠️ Error en registro");
             return "redirect:/usuario/login";
         }
     }
 
+    // 🚪 CERRAR SESIÓN
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/usuario/login";
     }
 

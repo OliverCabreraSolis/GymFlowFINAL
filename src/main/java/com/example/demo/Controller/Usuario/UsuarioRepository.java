@@ -27,12 +27,11 @@ public class UsuarioRepository implements UsuarioDAO {
         return usuario;
     };
 
-    // 🆕 MÉTODOS NUEVOS PARA LOGIN
     @Override
     public Usuario obtenerUsuarioPorCorreoYContrasena(String correo, String contrasena) {
-        String query = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
+        String sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
         try {
-            return jdbcTemplate.queryForObject(query, usuarioRowMapper, correo, contrasena);
+            return jdbcTemplate.queryForObject(sql, usuarioRowMapper, correo, contrasena);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -40,13 +39,9 @@ public class UsuarioRepository implements UsuarioDAO {
 
     @Override
     public boolean existeCorreo(String correo) {
-        String query = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
-        try {
-            Integer count = jdbcTemplate.queryForObject(query, Integer.class, correo);
-            return count != null && count > 0;
-        } catch (Exception e) {
-            return false;
-        }
+        String sql = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, correo);
+        return count != null && count > 0;
     }
 
     // MÉTODOS EXISTENTES DEL CRUD
@@ -84,14 +79,16 @@ public class UsuarioRepository implements UsuarioDAO {
         }
     }
 
+
     @Override
     public void crearUsuario(Usuario usuario) {
-        String query = "INSERT INTO usuario (nombre, correo, contrasena, rol, disponible) VALUES (?, ?, ?, ?, TRUE)";
-        jdbcTemplate.update(query,
+        String sql = "INSERT INTO usuario (nombre, correo, contrasena, rol, disponible) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
                 usuario.getNombre(),
                 usuario.getCorreo(),
                 usuario.getContrasena(),
-                usuario.getRol());
+                usuario.getRol(),
+                true); // Siempre disponible al crear
     }
 
     @Override

@@ -32,8 +32,8 @@
            class="filtro-btn ${empty param.rol ? 'activo' : ''}">Todos los roles</a>
         <a href="/usuario/list?filtro=${filtroActual}&rol=CLIENTE"
            class="filtro-btn ${param.rol == 'CLIENTE' ? 'activo' : ''}">Clientes</a>
-        <a href="/usuario/list?filtro=${filtroActual}&rol=ADMIN"
-           class="filtro-btn ${param.rol == 'ADMIN' ? 'activo' : ''}">Administradores</a>
+        <a href="/usuario/list?filtro=${filtroActual}&rol=ADMINISTRADOR"
+           class="filtro-btn ${param.rol == 'ADMINISTRADOR' ? 'activo' : ''}">Administradores</a>
     </div>
 
     <!-- FORMULARIO CREAR -->
@@ -45,7 +45,7 @@
         <select name="rol" required>
             <option value="">Selecciona un rol</option>
             <option value="CLIENTE">Cliente</option>
-            <option value="ADMIN">Administrador</option>
+            <option value="ADMINISTRADOR">Administrador</option>
         </select>
 
         <button type="submit" class="agregar-btn">➕ Agregar Usuario</button>
@@ -73,7 +73,7 @@
                         <label>Rol:</label>
                         <select name="rol" required>
                             <option value="CLIENTE" ${usuario.rol == 'CLIENTE' ? 'selected' : ''}>Cliente</option>
-                            <option value="ADMIN" ${usuario.rol == 'ADMIN' ? 'selected' : ''}>Administrador</option>
+                            <option value="ADMINISTRADOR" ${usuario.rol == 'ADMIN' ? 'selected' : ''}>Administrador</option>
                         </select>
 
                         <label>Estado:</label>
@@ -102,7 +102,7 @@
                     <div class="estado-info">
                         <strong>Correo:</strong> ${usuario.correo}<br>
                         <strong>Rol:</strong>
-                        <span class="${usuario.rol == 'ADMIN' ? 'precio-destacado' : ''}">
+                        <span class="${usuario.rol == 'ADMINISTRADOR' ? 'precio-destacado' : ''}">
                                 ${usuario.rol}
                         </span><br>
                         <strong>ID:</strong> #${usuario.idUsuario}
