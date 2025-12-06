@@ -1,7 +1,7 @@
-package com.example.demo.Controller.Membresia;
+package com.example.demo.Membresia;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class MembresiaServiceImpl implements MembresiaService {
@@ -18,23 +18,18 @@ public class MembresiaServiceImpl implements MembresiaService {
     }
 
     @Override
-    public List<Membresia> listarMembresiasInactivas() {
-        return membresiaDAO.listarMembresiasInactivas();
+    public List<Membresia> listarMembresiasActivas() {
+        return membresiaDAO.listarMembresiasActivas();
+    }
+
+    @Override
+    public List<Membresia> listarMembresiasCanceladas() {
+        return membresiaDAO.listarMembresiasCanceladas();
     }
 
     @Override
     public List<Membresia> listarTodasMembresias() {
         return membresiaDAO.listarTodasMembresias();
-    }
-
-    @Override
-    public List<Membresia> listarMembresiasPorUsuario(Integer idUsuario) {
-        return membresiaDAO.listarMembresiasPorUsuario(idUsuario);
-    }
-
-    @Override
-    public List<Membresia> listarMembresiasPorPlan(Integer idPlan) {
-        return membresiaDAO.listarMembresiasPorPlan(idPlan);
     }
 
     @Override
@@ -53,22 +48,12 @@ public class MembresiaServiceImpl implements MembresiaService {
     }
 
     @Override
-    public void desactivarMembresia(Integer id) {
-        membresiaDAO.desactivarMembresia(id);
-    }
-
-    @Override
-    public void reactivarMembresia(Integer id) {
-        membresiaDAO.reactivarMembresia(id);
-    }
-
-    @Override
     public void cancelarMembresia(Integer id) {
         membresiaDAO.cancelarMembresia(id);
     }
 
     @Override
-    public void activarMembresia(Integer id) {
-        membresiaDAO.activarMembresia(id);
+    public void reactivarMembresia(Integer id) {
+        membresiaDAO.reactivarMembresia(id);
     }
 }

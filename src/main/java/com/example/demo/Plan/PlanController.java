@@ -1,9 +1,12 @@
-package com.example.demo.Controller.Plan;
+package com.example.demo.Plan;
 
-import java.util.List;
+import com.example.demo.Plan.Plan;
+import com.example.demo.Plan.PlanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/plan")
@@ -15,13 +18,14 @@ public class PlanController {
         this.planService = planService;
     }
 
+
     @GetMapping("/list")
     public String listarPlanes(
             @RequestParam(required = false) Integer editarId,
             @RequestParam(required = false, defaultValue = "activos") String filtro,
             Model model) {
 
-        System.out.println("🎯 PLAN CONTROLLER - Cargando datos: " + filtro);
+        System.out.println("🎯 PLAN CONTROLLER - Cargando: " + filtro);
 
         List<Plan> lista;
 
@@ -32,17 +36,15 @@ public class PlanController {
             case "todos":
                 lista = planService.listarTodosPlanes();
                 break;
-            default: // activos
+            default:
                 lista = planService.listarPlanes();
         }
-
-        System.out.println("📦 Datos cargados: " + lista.size() + " planes");
 
         model.addAttribute("planes", lista);
         model.addAttribute("editarId", editarId);
         model.addAttribute("filtroActual", filtro);
 
-        return "admin/CRUDs/planesCRUD";
+        return "redirect:/plan/list";
     }
 
     @PostMapping("/crear")

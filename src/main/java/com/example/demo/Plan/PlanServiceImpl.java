@@ -1,7 +1,7 @@
-package com.example.demo.Controller.Plan;
+package com.example.demo.Plan;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class PlanServiceImpl implements PlanService {

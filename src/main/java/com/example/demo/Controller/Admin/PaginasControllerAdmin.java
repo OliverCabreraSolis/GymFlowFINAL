@@ -34,15 +34,11 @@ public class PaginasControllerAdmin {
     }
 
     @GetMapping("/ver-CRUDPlanes")
-    public String mostrarCRUDPlanes() {
-        return "admin/CRUDs/planesCRUD";
+    public String mostrarCRUDPlanes() { return "redirect:/plan/list";
     }
-
     @GetMapping("/ver-CRUDMembresias")
-    public String mostrarCRUDMembresias() {
-        return "admin/CRUDs/membresiasCRUD";
+    public String mostrarCRUDMembresias() { return "redirect:/membresia/list";
     }
-
     @GetMapping("/ver-CRUDTipoProducto")
     public String mostrarCRUDTipoProducto() {
         return "redirect:/tipoproducto/list";

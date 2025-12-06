@@ -14,28 +14,39 @@
 <main class="main-content">
     <h1>Gestión de Planes</h1>
 
-    <!-- FILTROS PRINCIPALES -->
+    <!-- FILTROS -->
     <div class="filtros">
-        <a href="/plan/list?filtro=activos" class="filtro-btn ${filtroActual == 'activos' ? 'activo' : ''}">Activos</a>
-        <a href="/plan/list?filtro=inactivos" class="filtro-btn ${filtroActual == 'inactivos' ? 'activo' : ''}">Inactivos</a>
-        <a href="/plan/list?filtro=todos" class="filtro-btn ${filtroActual == 'todos' ? 'activo' : ''}">Todos</a>
+        <a href="/plan/list?filtro=activos"
+           class="filtro-btn ${filtroActual == 'activos' ? 'activo' : ''}">Activos</a>
+        <a href="/plan/list?filtro=inactivos"
+           class="filtro-btn ${filtroActual == 'inactivos' ? 'activo' : ''}">Inactivos</a>
+        <a href="/plan/list?filtro=todos"
+           class="filtro-btn ${filtroActual == 'todos' ? 'activo' : ''}">Todos</a>
     </div>
+
+    <!-- MENSAJES -->
+    <c:if test="${not empty error}">
+        <div class="mensaje error">${error}</div>
+    </c:if>
+    <c:if test="${not empty success}">
+        <div class="mensaje success">${success}</div>
+    </c:if>
 
     <!-- FORMULARIO CREAR -->
     <form action="/plan/crear" method="post" class="form-tipo">
         <input type="text" name="nombre" placeholder="Nombre del plan" required>
         <input type="text" name="duracion" placeholder="Duración (ej: 1 mes, 3 meses)" required>
         <input type="number" name="precio" placeholder="Precio" step="0.01" min="0" required>
-        <textarea name="descripcion" placeholder="Descripción del plan" required></textarea>
+        <textarea name="descripcion" placeholder="Descripción del plan" rows="3"></textarea>
         <button type="submit" class="agregar-btn">➕ Agregar Plan</button>
     </form>
 
-    <!-- CARDS DE PLANES -->
+    <!-- CARDS -->
     <div class="tipos-grid">
         <c:forEach var="plan" items="${planes}">
 
-            <!-- MODO EDICIÓN -->
             <c:if test="${param.editarId == plan.idPlan}">
+                <!-- MODO EDICIÓN -->
                 <div class="tipo-card edicion">
                     <form action="/plan/actualizar" method="post">
                         <input type="hidden" name="idPlan" value="${plan.idPlan}">
@@ -46,11 +57,11 @@
                         <label>Duración:</label>
                         <input type="text" name="duracion" value="${plan.duracion}" required>
 
-                        <label>Precio (S/.):</label>
+                        <label>Precio:</label>
                         <input type="number" name="precio" value="${plan.precio}" step="0.01" min="0" required>
 
                         <label>Descripción:</label>
-                        <textarea name="descripcion" required>${plan.descripcion}</textarea>
+                        <textarea name="descripcion" rows="3">${plan.descripcion}</textarea>
 
                         <label>Estado:</label>
                         <select name="disponible">
@@ -60,24 +71,31 @@
 
                         <div class="botones">
                             <button type="submit" class="guardar-btn">💾 Guardar</button>
-                            <a href="/plan/list?filtro=${filtroActual}" class="cancelar-btn">❌ Cancelar</a>
+                            <a href="/plan/list?filtro=${filtroActual}"
+                               class="cancelar-btn">❌ Cancelar</a>
                         </div>
                     </form>
                 </div>
             </c:if>
 
-            <!-- MODO VISUALIZACIÓN -->
             <c:if test="${param.editarId != plan.idPlan}">
+                <!-- MODO VISUALIZACIÓN -->
                 <div class="tipo-card ${plan.disponible ? '' : 'inactivo'}">
                     <c:if test="${not plan.disponible}">
                         <div class="badge-inactivo">INACTIVO</div>
                     </c:if>
                     <h3>${plan.nombre}</h3>
-                    <p>${plan.descripcion}</p>
+
+                    <div class="duracion-badge">${plan.duracion}</div>
+
                     <div class="estado-info">
-                        <strong>Duración:</strong> ${plan.duracion}<br>
-                        <strong>Precio:</strong> S/. ${plan.precio}
+                        <strong>Precio:</strong>
+                        <span class="precio-destacado">$${plan.precio}</span><br>
+                        <strong>ID:</strong> #${plan.idPlan}
                     </div>
+
+                    <p>${plan.descripcion}</p>
+
                     <div class="botones">
                         <a href="/plan/list?filtro=${filtroActual}&editarId=${plan.idPlan}"
                            class="editar-btn">✏️ Editar</a>
@@ -103,5 +121,6 @@
         </c:forEach>
     </div>
 </main>
+
 </body>
 </html>

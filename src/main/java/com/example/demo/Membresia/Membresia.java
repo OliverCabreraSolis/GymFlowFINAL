@@ -1,4 +1,4 @@
-package com.example.demo.Controller.Membresia;
+package com.example.demo.Membresia;
 
 import java.sql.Date;
 
@@ -14,30 +14,7 @@ public class Membresia {
     private String estado;
     private Boolean disponible;
 
-    // Campos adicionales para JOIN
-    private String nombreUsuario;
-    private String nombrePlan;
-    private String duracionPlan;
-    private Double precioPlan;
-
-    public Membresia() {
-        // Constructor vacío
-    }
-
-    public Membresia(Integer idMembresia, Integer idUsuario, Integer idPlan, String nombre,
-                     Date fechaInicio, Date fechaFin, String descripcion,
-                     Double precio, String estado, Boolean disponible) {
-        this.idMembresia = idMembresia;
-        this.idUsuario = idUsuario;
-        this.idPlan = idPlan;
-        this.nombre = nombre;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.estado = estado;
-        this.disponible = disponible;
-    }
+    public Membresia() {}
 
     // Getters y Setters
     public Integer getIdMembresia() { return idMembresia; }
@@ -69,17 +46,4 @@ public class Membresia {
 
     public Boolean getDisponible() { return disponible; }
     public void setDisponible(Boolean disponible) { this.disponible = disponible; }
-
-    // Getters y Setters para campos adicionales
-    public String getNombreUsuario() { return nombreUsuario; }
-    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
-
-    public String getNombrePlan() { return nombrePlan; }
-    public void setNombrePlan(String nombrePlan) { this.nombrePlan = nombrePlan; }
-
-    public String getDuracionPlan() { return duracionPlan; }
-    public void setDuracionPlan(String duracionPlan) { this.duracionPlan = duracionPlan; }
-
-    public Double getPrecioPlan() { return precioPlan; }
-    public void setPrecioPlan(Double precioPlan) { this.precioPlan = precioPlan; }
 }

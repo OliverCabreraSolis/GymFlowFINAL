@@ -1,4 +1,4 @@
-package com.example.demo.Controller.Plan;
+package com.example.demo.Plan;
 
 public class Plan {
     private Integer idPlan;
@@ -8,11 +8,10 @@ public class Plan {
     private String descripcion;
     private Boolean disponible;
 
-    public Plan() {
-        // Constructor vacío
-    }
+    public Plan() {}
 
-    public Plan(Integer idPlan, String nombre, String duracion, Double precio, String descripcion, Boolean disponible) {
+    public Plan(Integer idPlan, String nombre, String duracion, Double precio,
+                String descripcion, Boolean disponible) {
         this.idPlan = idPlan;
         this.nombre = nombre;
         this.duracion = duracion;

@@ -66,68 +66,68 @@ INSERT INTO plan (nombre, duracion, precio, descripcion) VALUES
 
 -- MEMBRESIAS
 -- MEMBRESIAS HISTÓRICAS PARA MÉTRICAS (Últimos 12 meses)
-INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, descripcion, precio, estado) VALUES
+INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, descripcion, precio, estado, disponible) VALUES
     -- Enero 2025
-    (11, 1, 'Membresia Ene 1', '2025-01-05', '2024-02-05', 'Plan Básico', 50.00, 'ACTIVA'),
-    (12, 2, 'Membresia Ene 2', '2025-01-10', '2024-04-10', 'Plan Premium', 140.00, 'CANCELADA'),
-    (13, 1, 'Membresia Ene 3', '2025-01-15', '2024-02-15', 'Plan Básico', 50.00, 'ACTIVA'),
+    (11, 1, 'Membresia Ene 1', '2025-01-05', '2024-02-05', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (12, 2, 'Membresia Ene 2', '2025-01-10', '2024-04-10', 'Plan Premium', 140.00, 'CANCELADA', FALSE),
+    (13, 1, 'Membresia Ene 3', '2025-01-15', '2024-02-15', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Febrero 2025
-    (14, 3, 'Membresia Feb 1', '2025-02-01', '2025-02-01', 'Plan Anual', 500.00, 'ACTIVA'),
-    (15, 1, 'Membresia Feb 2', '2025-02-10', '2024-03-10', 'Plan Básico', 50.00, 'CANCELADA'),
-    (16, 2, 'Membresia Feb 3', '2025-02-15', '2024-05-15', 'Plan Premium', 140.00, 'ACTIVA'),
-    (17, 1, 'Membresia Feb 4', '2025-02-20', '2024-03-20', 'Plan Básico', 50.00, 'ACTIVA'),
+    (14, 3, 'Membresia Feb 1', '2025-02-01', '2025-02-01', 'Plan Anual', 500.00, 'ACTIVA', TRUE),
+    (15, 1, 'Membresia Feb 2', '2025-02-10', '2024-03-10', 'Plan Básico', 50.00, 'CANCELADA', FALSE),
+    (16, 2, 'Membresia Feb 3', '2025-02-15', '2024-05-15', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
+    (17, 1, 'Membresia Feb 4', '2025-02-20', '2024-03-20', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Marzo 2025
-    (18, 4, 'Membresia Mar 1', '2025-03-05', '2024-04-05', 'Plan Intensivo', 70.00, 'ACTIVA'),
-    (19, 1, 'Membresia Mar 2', '2025-03-10', '2024-04-10', 'Plan Básico', 50.00, 'ACTIVA'),
-    (20, 2, 'Membresia Mar 3', '2025-03-15', '2024-06-15', 'Plan Premium', 140.00, 'CANCELADA'),
-    (1, 1, 'Membresia Mar 4', '2025-03-20', '2024-04-20', 'Plan Básico', 50.00, 'ACTIVA'),
-    (2, 5, 'Membresia Mar 5', '2025-03-25', '2024-04-25', 'Plan Yoga', 60.00, 'ACTIVA'),
+    (18, 4, 'Membresia Mar 1', '2025-03-05', '2024-04-05', 'Plan Intensivo', 70.00, 'ACTIVA', TRUE),
+    (19, 1, 'Membresia Mar 2', '2025-03-10', '2024-04-10', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (20, 2, 'Membresia Mar 3', '2025-03-15', '2024-06-15', 'Plan Premium', 140.00, 'CANCELADA', FALSE),
+    (1, 1, 'Membresia Mar 4', '2025-03-20', '2024-04-20', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (2, 5, 'Membresia Mar 5', '2025-03-25', '2024-04-25', 'Plan Yoga', 60.00, 'ACTIVA', TRUE),
 
     -- Abril 2024
-    (3, 1, 'Membresia Abr 1', '2025-04-01', '2024-05-01', 'Plan Básico', 50.00, 'ACTIVA'),
-    (4, 2, 'Membresia Abr 2', '2025-04-05', '2024-07-05', 'Plan Premium', 140.00, 'ACTIVA'),
-    (5, 1, 'Membresia Abr 3', '2025-04-10', '2024-05-10', 'Plan Básico', 50.00, 'CANCELADA'),
-    (6, 6, 'Membresia Abr 4', '2025-04-15', '2024-07-15', 'Plan Crossfit', 200.00, 'ACTIVA'),
+    (3, 1, 'Membresia Abr 1', '2025-04-01', '2024-05-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (4, 2, 'Membresia Abr 2', '2025-04-05', '2024-07-05', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
+    (5, 1, 'Membresia Abr 3', '2025-04-10', '2024-05-10', 'Plan Básico', 50.00, 'CANCELADA', FALSE),
+    (6, 6, 'Membresia Abr 4', '2025-04-15', '2024-07-15', 'Plan Crossfit', 200.00, 'ACTIVA', TRUE),
 
     -- Mayo 2024
-    (7, 1, 'Membresia May 1', '2025-05-01', '2024-06-01', 'Plan Básico', 50.00, 'ACTIVA'),
-    (8, 2, 'Membresia May 2', '2025-05-05', '2024-08-05', 'Plan Premium', 140.00, 'ACTIVA'),
-    (9, 1, 'Membresia May 3', '2025-05-10', '2024-06-10', 'Plan Básico', 50.00, 'ACTIVA'),
-    (10, 7, 'Membresia May 4', '2025-05-15', '2024-06-15', 'Plan Nutrición', 40.00, 'CANCELADA'),
+    (7, 1, 'Membresia May 1', '2025-05-01', '2024-06-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (8, 2, 'Membresia May 2', '2025-05-05', '2024-08-05', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
+    (9, 1, 'Membresia May 3', '2025-05-10', '2024-06-10', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (10, 7, 'Membresia May 4', '2025-05-15', '2024-06-15', 'Plan Nutrición', 40.00, 'CANCELADA', FALSE),
 
     -- Junio 2024
-    (11, 1, 'Membresia Jun 1', '2025-06-01', '2024-07-01', 'Plan Básico', 50.00, 'ACTIVA'),
+    (11, 1, 'Membresia Jun 1', '2025-06-01', '2024-07-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Julio 2024
-    (14, 1, 'Membresia Jul 1', '2025-07-01', '2024-08-01', 'Plan Básico', 50.00, 'ACTIVA'),
-    (15, 2, 'Membresia Jul 2', '2025-07-05', '2024-10-05', 'Plan Premium', 140.00, 'CANCELADA'),
-    (16, 1, 'Membresia Jul 3', '2025-07-10', '2024-08-10', 'Plan Básico', 50.00, 'ACTIVA'),
+    (14, 1, 'Membresia Jul 1', '2025-07-01', '2024-08-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (15, 2, 'Membresia Jul 2', '2025-07-05', '2024-10-05', 'Plan Premium', 140.00, 'CANCELADA',FALSE),
+    (16, 1, 'Membresia Jul 3', '2025-07-10', '2024-08-10', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Agosto 2024
-    (17, 9, 'Membresia Ago 1', '2025-08-01', '2025-08-01', 'Plan Familiar', 900.00, 'ACTIVA'),
-    (18, 1, 'Membresia Ago 2', '2025-08-05', '2024-09-05', 'Plan Básico', 50.00, 'ACTIVA'),
+    (17, 9, 'Membresia Ago 1', '2025-08-01', '2025-08-01', 'Plan Familiar', 900.00, 'ACTIVA', TRUE),
+    (18, 1, 'Membresia Ago 2', '2025-08-05', '2024-09-05', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Septiembre 2024
-    (20, 1, 'Membresia Sep 1', '2025-09-01', '2024-10-01', 'Plan Básico', 50.00, 'CANCELADA'),
-    (1, 10, 'Membresia Sep 2', '2025-09-05', '2024-10-05', 'Plan Estudiantil', 30.00, 'ACTIVA'),
-    (2, 2, 'Membresia Sep 3', '2025-09-10', '2024-12-10', 'Plan Premium', 140.00, 'ACTIVA'),
+    (20, 1, 'Membresia Sep 1', '2025-09-01', '2024-10-01', 'Plan Básico', 50.00, 'CANCELADA', FALSE),
+    (1, 10, 'Membresia Sep 2', '2025-09-05', '2024-10-05', 'Plan Estudiantil', 30.00, 'ACTIVA', TRUE),
+    (2, 2, 'Membresia Sep 3', '2025-09-10', '2024-12-10', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
 
     -- Octubre 2024
-    (3, 1, 'Membresia Oct 1', '2025-10-01', '2024-11-01', 'Plan Básico', 50.00, 'ACTIVA'),
-    (4, 2, 'Membresia Oct 2', '2025-10-05', '2025-01-05', 'Plan Premium', 140.00, 'ACTIVA'),
-    (5, 1, 'Membresia Oct 3', '2025-10-10', '2024-11-10', 'Plan Básico', 50.00, 'ACTIVA'),
+    (3, 1, 'Membresia Oct 1', '2025-10-01', '2024-11-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (4, 2, 'Membresia Oct 2', '2025-10-05', '2025-01-05', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
+    (5, 1, 'Membresia Oct 3', '2025-10-10', '2024-11-10', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
 
     -- Noviembre 2024
-    (8, 2, 'Membresia Nov 3', '2025-11-10', '2025-02-10', 'Plan Premium', 140.00, 'ACTIVA'),
+    (8, 2, 'Membresia Nov 3', '2025-11-10', '2025-02-10', 'Plan Premium', 140.00, 'ACTIVA', TRUE),
 
     -- Diciembre 2024
-    (9, 1, 'Membresia Dic 1', '2025-12-01', '2025-01-01', 'Plan Básico', 50.00, 'ACTIVA'),
-    (10, 4, 'Membresia Dic 2', '2025-12-05', '2025-01-05', 'Plan Intensivo', 70.00, 'ACTIVA'),
+    (9, 1, 'Membresia Dic 1', '2025-12-01', '2025-01-01', 'Plan Básico', 50.00, 'ACTIVA', TRUE),
+    (10, 4, 'Membresia Dic 2', '2025-12-05', '2025-01-05', 'Plan Intensivo', 70.00, 'ACTIVA', TRUE),
 
     -- Enero 2025
-    (12, 2, 'Membresia Ene 2025 2', '2025-01-05', '2025-04-05', 'Plan Premium', 140.00, 'ACTIVA');
+    (12, 2, 'Membresia Ene 2025 2', '2025-01-05', '2025-04-05', 'Plan Premium', 140.00, 'ACTIVA', TRUE);
 
 -- PAGOS
 INSERT INTO pago (total, metodo_pago, id_usuario) VALUES
