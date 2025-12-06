@@ -131,16 +131,16 @@ INSERT INTO membresia (id_usuario, id_plan, nombre, fecha_inicio, fecha_fin, des
 
 -- PAGOS
 INSERT INTO pago (total, metodo_pago, id_usuario) VALUES
-    (50.00, 'TARJETA', 1),
-    (140.00, 'YAPE', 2),
-    (500.00, 'TARJETA', 3),
-    (70.00, 'EFECTIVO', 4),
-    (60.00, 'TARJETA', 5),
-    (200.00, 'YAPE', 6),
-    (40.00, 'EFECTIVO', 7),
-    (180.00, 'TARJETA', 8),
-    (900.00, 'PLIN', 9),
-    (30.00, 'EFECTIVO', 10);
+  (50.00, 'TARJETA', 1),
+  (140.00, 'YAPE', 2),
+  (500.00, 'TARJETA', 3),
+  (70.00, 'EFECTIVO', 4),
+  (60.00, 'TARJETA', 5),
+  (200.00, 'YAPE', 6),
+  (40.00, 'EFECTIVO', 7),
+  (180.00, 'TARJETA', 8),
+  (900.00, 'PLIN', 9),
+  (30.00, 'EFECTIVO', 10);
 
 -- DETALLE PAGO
 INSERT INTO detalle_pago (id_pago, tipo_item, id_producto, id_plan, cantidad, precio_unitario, subtotal) VALUES
