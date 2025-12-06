@@ -147,10 +147,8 @@
     <!-- Script para el gráfico -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Variable global para la instancia del gráfico
         let evolucionChartInstance = null;
 
-        // Función para mostrar/ocultar elementos
         function showElement(id, show) {
             const element = document.getElementById(id);
             if (element) {
@@ -158,7 +156,6 @@
             }
         }
 
-        // Función para mostrar error
         function showError(message) {
             const errorElement = document.getElementById('chartError');
             if (errorElement) {
@@ -167,9 +164,7 @@
             }
         }
 
-        // Función principal para cargar datos
         async function cargarDatosEvolucion() {
-            // Mostrar loading
             showElement('chartLoading', true);
             showElement('chartError', false);
             showElement('chartNoData', false);
@@ -183,16 +178,13 @@
 
                 const datos = await response.json();
 
-                // Ocultar loading
                 showElement('chartLoading', false);
 
-                // Verificar si hay datos
                 if (!datos || datos.length === 0) {
                     showElement('chartNoData', true);
                     return;
                 }
 
-                // Renderizar gráfico con datos reales
                 renderizarGrafico(datos);
 
             } catch (error) {
@@ -201,11 +193,9 @@
             }
         }
 
-        // Función para renderizar el gráfico
         function renderizarGrafico(datos) {
             const ctx = document.getElementById('evolucionChart').getContext('2d');
 
-            // Procesar datos
             const mesesNombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
             const labels = [];
@@ -213,7 +203,6 @@
             const bajas = [];
             const crecimientoNeto = [];
 
-            // Procesar cada registro
             for (let i = 0; i < datos.length; i++) {
                 const item = datos[i];
 
@@ -311,7 +300,12 @@
                         },
                         tooltip: {
                             mode: 'index',
-                            intersect: false
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            padding: 12,
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 13 },
+                            cornerRadius: 6
                         }
                     },
                     scales: {
@@ -336,10 +330,10 @@
             });
         }
 
-        // Cargar datos cuando la página esté lista
+        // Cargar datos
         document.addEventListener('DOMContentLoaded', cargarDatosEvolucion);
 
-        // Redimensionar gráfico al cambiar tamaño de ventana
+        // Redimensionar
         window.addEventListener('resize', function() {
             if (evolucionChartInstance) {
                 evolucionChartInstance.resize();
