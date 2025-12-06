@@ -44,7 +44,7 @@ public class PlanController {
         model.addAttribute("editarId", editarId);
         model.addAttribute("filtroActual", filtro);
 
-        return "redirect:/plan/list";
+        return "admin/CRUDs/planesCRUD";
     }
 
     @PostMapping("/crear")
