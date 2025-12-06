@@ -10,23 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
     <style>
-        .bars-wrapper {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-            height: 150px;
-        }
-        .bar-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-        .bar-container {
-            width: 40px;
-            display: flex;
-            align-items: flex-end;
-        }
         .description-section {
             background: #f8fafc;
             border-left: 4px solid #ff6b6b;
@@ -49,6 +32,39 @@
         }
         .description-section ul li {
             margin-bottom: 8px;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 500px;
+            width: 100%;
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .alert-info {
+            background: #e8f4fd;
+            color: #0c5460;
+            border: 1px solid #b8daff;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
     </style>
 </head>
@@ -99,7 +115,14 @@
         <!-- Gráfico -->
         <section class="chart-section">
             <div class="chart-container">
-                <canvas id="evolucionChart" width="400" height="200"></canvas>
+                <div id="chartLoading" class="alert alert-info" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Cargando datos...
+                </div>
+                <div id="chartError" class="alert alert-error" style="display: none;"></div>
+                <div id="chartNoData" class="alert alert-info" style="display: none;">
+                    <i class="fas fa-info-circle"></i> No hay datos disponibles para mostrar.
+                </div>
+                <canvas id="evolucionChart"></canvas>
             </div>
         </section>
 
@@ -124,17 +147,57 @@
     <!-- Script para el gráfico -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Función para cargar los datos del backend
+        // Variable global para la instancia del gráfico
+        let evolucionChartInstance = null;
+
+        // Función para mostrar/ocultar elementos
+        function showElement(id, show) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.display = show ? 'block' : 'none';
+            }
+        }
+
+        // Función para mostrar error
+        function showError(message) {
+            const errorElement = document.getElementById('chartError');
+            if (errorElement) {
+                errorElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + message;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        // Función principal para cargar datos
         async function cargarDatosEvolucion() {
+            // Mostrar loading
+            showElement('chartLoading', true);
+            showElement('chartError', false);
+            showElement('chartNoData', false);
+
             try {
                 const response = await fetch('${pageContext.request.contextPath}/api/metricas/evolucion-suscripciones');
+
+                if (!response.ok) {
+                    throw new Error('Error al cargar datos del servidor');
+                }
+
                 const datos = await response.json();
 
+                // Ocultar loading
+                showElement('chartLoading', false);
+
+                // Verificar si hay datos
+                if (!datos || datos.length === 0) {
+                    showElement('chartNoData', true);
+                    return;
+                }
+
+                // Renderizar gráfico con datos reales
                 renderizarGrafico(datos);
+
             } catch (error) {
-                console.error('Error cargando datos:', error);
-                // Mostrar datos de ejemplo si hay error
-                mostrarDatosEjemplo();
+                showElement('chartLoading', false);
+                showError('No se pudieron cargar los datos: ' + error.message);
             }
         }
 
@@ -142,36 +205,42 @@
         function renderizarGrafico(datos) {
             const ctx = document.getElementById('evolucionChart').getContext('2d');
 
-            console.log('Datos recibidos para gráfico:', datos);
+            // Procesar datos
+            const mesesNombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-            // Procesar datos para el gráfico
-            const labels = datos.map(item => {
-                const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                const mesNumero = parseInt(item.MES) - 1; // Restar 1 porque los arrays empiezan en 0
-                const anio = parseInt(item.ANIO);
+            const labels = [];
+            const nuevasMembresias = [];
+            const bajas = [];
+            const crecimientoNeto = [];
 
-                if (mesNumero >= 0 && mesNumero < meses.length) {
-                    return `${meses[mesNumero]} ${anio}`;
+            // Procesar cada registro
+            for (let i = 0; i < datos.length; i++) {
+                const item = datos[i];
+
+                // Crear label
+                const mesNum = parseInt(item.MES) || 0;
+                const anioNum = parseInt(item.ANIO) || 0;
+
+                let label;
+                if (mesNum >= 1 && mesNum <= 12) {
+                    label = mesesNombres[mesNum - 1] + ' ' + anioNum;
                 } else {
-                    return `Mes ${item.MES} ${anio}`;
+                    label = 'Mes ' + mesNum + ' ' + anioNum;
                 }
-            });
 
-            const nuevasMembresias = datos.map(item => parseInt(item.NUEVAS_MEMBRESIAS) || 0);
-            const bajas = datos.map(item => parseInt(item.BAJAS) || 0);
-            const crecimientoNeto = datos.map(item => parseInt(item.CRECIMIENTO_NETO) || 0);
-
-            console.log('Labels procesados:', labels);
-            console.log('Nuevas membresías:', nuevasMembresias);
-            console.log('Bajas:', bajas);
-            console.log('Crecimiento neto:', crecimientoNeto);
-
-            // Resto del código para renderizar el gráfico permanece igual...
-            if (window.evolucionChartInstance) {
-                window.evolucionChartInstance.destroy();
+                labels.push(label);
+                nuevasMembresias.push(parseInt(item.NUEVAS_MEMBRESIAS) || 0);
+                bajas.push(parseInt(item.BAJAS) || 0);
+                crecimientoNeto.push(parseInt(item.CRECIMIENTO_NETO) || 0);
             }
 
-            window.evolucionChartInstance = new Chart(ctx, {
+            // Destruir gráfico anterior si existe
+            if (evolucionChartInstance) {
+                evolucionChartInstance.destroy();
+            }
+
+            // Crear nuevo gráfico
+            evolucionChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -182,8 +251,12 @@
                             borderColor: '#10b981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             borderWidth: 3,
-                            tension: 0.1,
-                            fill: false
+                            tension: 0.2,
+                            fill: false,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
                         },
                         {
                             label: 'Bajas',
@@ -191,8 +264,12 @@
                             borderColor: '#ef4444',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
                             borderWidth: 3,
-                            tension: 0.1,
-                            fill: false
+                            tension: 0.2,
+                            fill: false,
+                            pointBackgroundColor: '#ef4444',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
                         },
                         {
                             label: 'Crecimiento Neto',
@@ -200,8 +277,12 @@
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 3,
-                            tension: 0.1,
-                            fill: false
+                            tension: 0.2,
+                            fill: false,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
                         }
                     ]
                 },
@@ -211,76 +292,60 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Evolución de Suscripciones - Últimos 12 Meses',
-                            font: { size: 16, weight: 'bold' }
+                            text: 'Evolución de Suscripciones - Últimos 24 Meses',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            padding: { bottom: 20 }
                         },
-                        legend: { position: 'top' }
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                },
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            title: { display: true, text: 'Cantidad de Membresías' }
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Membresías'
+                            },
+                            ticks: {
+                                stepSize: 1
+                            }
                         },
                         x: {
-                            title: { display: true, text: 'Periodo' }
+                            title: {
+                                display: true,
+                                text: 'Periodo'
+                            }
                         }
                     }
                 }
             });
         }
 
-        // Función de respaldo con datos de ejemplo
-        function mostrarDatosEjemplo() {
-            const datosEjemplo = [
-                { anio: 2024, mes: 1, nuevas_membresias: 15, bajas: 5, crecimiento_neto: 10 },
-                { anio: 2024, mes: 2, nuevas_membresias: 18, bajas: 7, crecimiento_neto: 11 },
-                { anio: 2024, mes: 3, nuevas_membresias: 22, bajas: 8, crecimiento_neto: 14 },
-                { anio: 2024, mes: 4, nuevas_membresias: 20, bajas: 6, crecimiento_neto: 14 },
-                { anio: 2024, mes: 5, nuevas_membresias: 25, bajas: 10, crecimiento_neto: 15 },
-                { anio: 2024, mes: 6, nuevas_membresias: 30, bajas: 12, crecimiento_neto: 18 }
-            ];
-
-            renderizarGrafico(datosEjemplo);
-
-            // Mostrar mensaje de advertencia
-            const chartContainer = document.querySelector('.chart-container');
-            chartContainer.innerHTML = `
-            <div class="alert alert-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                Se están mostrando datos de ejemplo. Verifique la conexión con el servidor.
-            </div>
-            <canvas id="evolucionChart" width="400" height="200"></canvas>
-        `;
-        }
-
-        // Cargar los datos cuando la página esté lista
+        // Cargar datos cuando la página esté lista
         document.addEventListener('DOMContentLoaded', cargarDatosEvolucion);
+
+        // Redimensionar gráfico al cambiar tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (evolucionChartInstance) {
+                evolucionChartInstance.resize();
+            }
+        });
     </script>
-
-    <style>
-        .chart-section {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-
-        .alert {
-            padding: 10px 15px;
-            background: #fef3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            color: #856404;
-        }
-    </style>
 </div>
 </body>
 </html>
