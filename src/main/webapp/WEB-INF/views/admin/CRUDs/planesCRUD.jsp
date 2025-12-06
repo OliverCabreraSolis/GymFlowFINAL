@@ -1,165 +1,107 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Planes</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/planes.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Planes - GymFlow</title>
+    <link rel="stylesheet" href="/css/CrudsStyles.css">
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/admin/dashboard" class="btn-volver">Regresar al panel</a>
+<a href="/ver-CRUDsInicio" class="btn-volver">← Volver a CRUDs</a>
 
 <main class="main-content">
     <h1>Gestión de Planes</h1>
 
-    <!-- 🧾 Formulario para agregar plan -->
-    <form id="formPlan" class="form-producto">
-        <input type="text" id="nombre" placeholder="Nombre del plan" required>
-        <select id="duracion" required>
-            <option value="">Selecciona duración</option>
-            <option value="1 mes">1 mes</option>
-            <option value="3 meses">3 meses</option>
-            <option value="6 meses">6 meses</option>
-            <option value="1 año">1 año</option>
-        </select>
-        <input type="number" id="precio" placeholder="Precio (S/.)" min="0" required>
-        <textarea id="descripcion" placeholder="Descripción del plan" required></textarea>
-        <button type="submit">Agregar Plan</button>
+    <!-- FILTROS PRINCIPALES -->
+    <div class="filtros">
+        <a href="/plan/list?filtro=activos" class="filtro-btn ${filtroActual == 'activos' ? 'activo' : ''}">Activos</a>
+        <a href="/plan/list?filtro=inactivos" class="filtro-btn ${filtroActual == 'inactivos' ? 'activo' : ''}">Inactivos</a>
+        <a href="/plan/list?filtro=todos" class="filtro-btn ${filtroActual == 'todos' ? 'activo' : ''}">Todos</a>
+    </div>
+
+    <!-- FORMULARIO CREAR -->
+    <form action="/plan/crear" method="post" class="form-tipo">
+        <input type="text" name="nombre" placeholder="Nombre del plan" required>
+        <input type="text" name="duracion" placeholder="Duración (ej: 1 mes, 3 meses)" required>
+        <input type="number" name="precio" placeholder="Precio" step="0.01" min="0" required>
+        <textarea name="descripcion" placeholder="Descripción del plan" required></textarea>
+        <button type="submit" class="agregar-btn">➕ Agregar Plan</button>
     </form>
 
-    <!-- 🎛️ Filtro -->
-    <label for="filtroDuracion">Filtrar por duración:</label>
-    <select id="filtroDuracion">
-        <option value="">Todos</option>
-        <option value="1 mes">1 mes</option>
-        <option value="3 meses">3 meses</option>
-        <option value="6 meses">6 meses</option>
-        <option value="1 año">1 año</option>
-    </select>
-
-    <!-- 📦 Contenedor -->
-    <div id="productos-container" class="productos-grid">
+    <!-- CARDS DE PLANES -->
+    <div class="tipos-grid">
         <c:forEach var="plan" items="${planes}">
-            <div class="producto-card" data-id="${plan.id}">
-                <h3 class="nombre">${plan.nombre}</h3>
-                <p><strong>Duración:</strong> <span class="duracion">${plan.duracion}</span></p>
-                <p><strong>Precio:</strong> S/ <span class="precio">${plan.precio}</span></p>
-                <p><strong>Descripción:</strong> <span class="texto-descripcion">${plan.descripcion}</span></p>
 
-                <div class="botones">
-                    <button class="editar-btn">Editar</button>
-                    <button class="guardar-btn oculto">Guardar</button>
-                    <button class="cancelar-btn oculto">Cancelar</button>
-                    <button class="eliminar-btn">Eliminar</button>
+            <!-- MODO EDICIÓN -->
+            <c:if test="${param.editarId == plan.idPlan}">
+                <div class="tipo-card edicion">
+                    <form action="/plan/actualizar" method="post">
+                        <input type="hidden" name="idPlan" value="${plan.idPlan}">
+
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" value="${plan.nombre}" required>
+
+                        <label>Duración:</label>
+                        <input type="text" name="duracion" value="${plan.duracion}" required>
+
+                        <label>Precio (S/.):</label>
+                        <input type="number" name="precio" value="${plan.precio}" step="0.01" min="0" required>
+
+                        <label>Descripción:</label>
+                        <textarea name="descripcion" required>${plan.descripcion}</textarea>
+
+                        <label>Estado:</label>
+                        <select name="disponible">
+                            <option value="true" ${plan.disponible ? 'selected' : ''}>Activo</option>
+                            <option value="false" ${not plan.disponible ? 'selected' : ''}>Inactivo</option>
+                        </select>
+
+                        <div class="botones">
+                            <button type="submit" class="guardar-btn">💾 Guardar</button>
+                            <a href="/plan/list?filtro=${filtroActual}" class="cancelar-btn">❌ Cancelar</a>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </c:if>
+
+            <!-- MODO VISUALIZACIÓN -->
+            <c:if test="${param.editarId != plan.idPlan}">
+                <div class="tipo-card ${plan.disponible ? '' : 'inactivo'}">
+                    <c:if test="${not plan.disponible}">
+                        <div class="badge-inactivo">INACTIVO</div>
+                    </c:if>
+                    <h3>${plan.nombre}</h3>
+                    <p>${plan.descripcion}</p>
+                    <div class="estado-info">
+                        <strong>Duración:</strong> ${plan.duracion}<br>
+                        <strong>Precio:</strong> S/. ${plan.precio}
+                    </div>
+                    <div class="botones">
+                        <a href="/plan/list?filtro=${filtroActual}&editarId=${plan.idPlan}"
+                           class="editar-btn">✏️ Editar</a>
+
+                        <c:choose>
+                            <c:when test="${plan.disponible}">
+                                <form action="/plan/desactivar" method="post">
+                                    <input type="hidden" name="id" value="${plan.idPlan}">
+                                    <button type="submit" class="eliminar-btn">🗑️ Desactivar</button>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form action="/plan/reactivar" method="post">
+                                    <input type="hidden" name="id" value="${plan.idPlan}">
+                                    <button type="submit" class="reactivar-btn">♻️ Reactivar</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:if>
+
         </c:forEach>
     </div>
 </main>
-
-<script>
-    const form = document.getElementById("formPlan");
-    const container = document.getElementById("productos-container");
-    const filtro = document.getElementById("filtroDuracion");
-
-    function renderPlanes() {
-        // Ya renderizados por el servidor al cargar la página
-    }
-
-    // Agregar un nuevo plan
-    form.addEventListener("submit", async e => {
-        e.preventDefault();
-
-        const nuevoPlan = {
-            nombre: document.getElementById("nombre").value,
-            duracion: document.getElementById("duracion").value,
-            precio: parseFloat(document.getElementById("precio").value),
-            descripcion: document.getElementById("descripcion").value
-        };
-
-        const res = await fetch("${pageContext.request.contextPath}/admin/planes/api", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(nuevoPlan)
-        });
-
-        if (res.ok) location.reload();
-    });
-
-    // Delegación de eventos para editar/eliminar
-    container.addEventListener("click", async e => {
-        const card = e.target.closest(".producto-card");
-        const id = card.dataset.id;
-
-        if (e.target.classList.contains("eliminar-btn")) {
-            const res = await fetch(`${pageContext.request.contextPath}/admin/planes/api/${id}`, {
-                method: "DELETE"
-            });
-            if (res.ok) card.remove();
-        }
-
-        if (e.target.classList.contains("editar-btn")) {
-            const nombreEl = card.querySelector(".nombre");
-            const duracionEl = card.querySelector(".duracion");
-            const precioEl = card.querySelector(".precio");
-            const descEl = card.querySelector(".texto-descripcion");
-
-            const guardarBtn = card.querySelector(".guardar-btn");
-            const cancelarBtn = card.querySelector(".cancelar-btn");
-            e.target.classList.add("oculto");
-            guardarBtn.classList.remove("oculto");
-            cancelarBtn.classList.remove("oculto");
-
-            const inputDuracion = document.createElement("select");
-            ["1 mes", "3 meses", "6 meses", "1 año"].forEach(op => {
-                const option = document.createElement("option");
-                option.value = op;
-                option.textContent = op;
-                if (op === duracionEl.textContent) option.selected = true;
-                inputDuracion.appendChild(option);
-            });
-
-            const inputPrecio = document.createElement("input");
-            inputPrecio.type = "number";
-            inputPrecio.value = precioEl.textContent;
-
-            const inputDesc = document.createElement("textarea");
-            inputDesc.value = descEl.textContent;
-
-            duracionEl.replaceWith(inputDuracion);
-            precioEl.replaceWith(inputPrecio);
-            descEl.replaceWith(inputDesc);
-
-            guardarBtn.onclick = async () => {
-                const actualizado = {
-                    nombre: nombreEl.textContent,
-                    duracion: inputDuracion.value,
-                    precio: parseFloat(inputPrecio.value),
-                    descripcion: inputDesc.value
-                };
-
-                const res = await fetch(`${pageContext.request.contextPath}/admin/planes/api/${id}`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(actualizado)
-                });
-
-                if (res.ok) location.reload();
-            };
-
-            cancelarBtn.onclick = () => location.reload();
-        }
-    });
-
-    filtro.addEventListener("change", e => {
-        const duracion = e.target.value;
-        const url = duracion
-            ? `${pageContext.request.contextPath}/admin/planes?duracion=${duracion}`
-            : `${pageContext.request.contextPath}/admin/planes`;
-        window.location.href = url;
-    });
-</script>
 </body>
 </html>
